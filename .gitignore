@@ -1,0 +1,75 @@
+# Byte-compiled / optimized / ambient Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# IDEs and Text Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Operating System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# Logs and databases
+*.log
+*.sqlite3
+
+# Large Dataset Archives and Raw Data (per NASA data usage & project guidelines)
+dataset/raw/
+dataset/raw/*
+dataset/raw/C-MAPSS/
+dataset/raw/C-MAPSS/*
+
+# Generated processed datasets (preserve folder structure via .gitkeep)
+dataset/processed/*
+!dataset/processed/.gitkeep
+
+# Redundant plot archives (individual plots are committed directly under reports/eda/)
+reports/eda/*.zip
+*.zip
+
+# Local environment variables / credentials
+.env
+.env.local
+*.pem
+*.key
