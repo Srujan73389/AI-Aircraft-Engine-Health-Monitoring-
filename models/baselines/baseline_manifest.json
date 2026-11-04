@@ -1,4 +1,100 @@
 {
+  "_project_configuration": {
+    "global_random_seed": 42,
+    "target_definition": {
+      "target_name": "Remaining Useful Life (RUL)",
+      "target_unit": "operational_cycles",
+      "training_target_capping": 125.0,
+      "primary_validation_capping": 125.0,
+      "diagnostic_validation_target": "uncapped",
+      "official_test_target": "uncapped",
+      "prediction_policy": "raw_unclipped",
+      "scoring_error_clipping": [
+        -500.0,
+        500.0
+      ],
+      "scoring_error_clipping_purpose": "numerical_protection_against_overflow"
+    },
+    "temporal_window": {
+      "window_size": 30,
+      "stride": 1,
+      "short_test_engine_padding": "left-edge replication of initial observation (cycle t=1 repeated backwards)"
+    },
+    "feature_tiers": {
+      "Tier1_Core14": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "Tier2_Operational17": [
+        "op_setting_1",
+        "op_setting_2",
+        "op_setting_3",
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "Tier3_Extended24": [
+        "op_setting_1",
+        "op_setting_2",
+        "op_setting_3",
+        "sensor_1",
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_5",
+        "sensor_6",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_10",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_16",
+        "sensor_17",
+        "sensor_18",
+        "sensor_19",
+        "sensor_20",
+        "sensor_21"
+      ]
+    },
+    "summary_statistics_definition": {
+      "window_length": 30,
+      "statistics": [
+        "mean",
+        "std",
+        "min",
+        "max",
+        "ols_linear_trend_slope"
+      ],
+      "formula_notes": "ols_linear_trend_slope computed over discrete time index t in [0, 29] via closed-form OLS formula: sum((t - t_mean)*(x - x_mean)) / sum((t - t_mean)**2)"
+    }
+  },
   "FD001_TrainingMean_Tier3_Extended24": {
     "subset": "FD001",
     "model_family": "ConstantMean",
@@ -25,7 +121,11 @@
     },
     "val_mean_engine_rmse": 41.7229,
     "val_final_cycle_rmse": 80.1274,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "strategy": "empirical_training_mean",
+      "fitted_mean_value": 80.1274
+    }
   },
   "FD001_Ridge_FinalObservation_Tier1_Core14": {
     "subset": "FD001",
@@ -53,7 +153,14 @@
     },
     "val_mean_engine_rmse": 21.605,
     "val_final_cycle_rmse": 23.3551,
-    "training_time_sec": 0.02
+    "training_time_sec": 0.02,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_Ridge_FinalObservation_Tier2_Operational17": {
     "subset": "FD001",
@@ -81,7 +188,14 @@
     },
     "val_mean_engine_rmse": 21.6084,
     "val_final_cycle_rmse": 23.3562,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_Ridge_FinalObservation_Tier3_Extended24": {
     "subset": "FD001",
@@ -109,7 +223,14 @@
     },
     "val_mean_engine_rmse": 21.5964,
     "val_final_cycle_rmse": 23.3658,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_Ridge_FlattenedWindow_Tier1_Core14": {
     "subset": "FD001",
@@ -137,7 +258,14 @@
     },
     "val_mean_engine_rmse": 16.6136,
     "val_final_cycle_rmse": 32.4634,
-    "training_time_sec": 0.08
+    "training_time_sec": 0.08,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_Ridge_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD001",
@@ -165,7 +293,14 @@
     },
     "val_mean_engine_rmse": 16.6421,
     "val_final_cycle_rmse": 32.5659,
-    "training_time_sec": 0.04
+    "training_time_sec": 0.04,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_Ridge_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD001",
@@ -193,7 +328,14 @@
     },
     "val_mean_engine_rmse": 16.6682,
     "val_final_cycle_rmse": 32.7033,
-    "training_time_sec": 0.07
+    "training_time_sec": 0.07,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD001_RandomForest_FlattenedWindow_Tier1_Core14": {
     "subset": "FD001",
@@ -221,7 +363,16 @@
     },
     "val_mean_engine_rmse": 18.725,
     "val_final_cycle_rmse": 4.2294,
-    "training_time_sec": 1.31
+    "training_time_sec": 1.31,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD001_RandomForest_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD001",
@@ -249,7 +400,16 @@
     },
     "val_mean_engine_rmse": 18.8392,
     "val_final_cycle_rmse": 4.4297,
-    "training_time_sec": 1.34
+    "training_time_sec": 1.34,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD001_RandomForest_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD001",
@@ -277,7 +437,16 @@
     },
     "val_mean_engine_rmse": 18.9371,
     "val_final_cycle_rmse": 4.6704,
-    "training_time_sec": 1.19
+    "training_time_sec": 1.19,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD001_RandomForest_SummaryStats_Tier1_Core14": {
     "subset": "FD001",
@@ -305,7 +474,16 @@
     },
     "val_mean_engine_rmse": 13.4595,
     "val_final_cycle_rmse": 2.6633,
-    "training_time_sec": 0.62
+    "training_time_sec": 0.62,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD001_RandomForest_SummaryStats_Tier2_Operational17": {
     "subset": "FD001",
@@ -333,7 +511,16 @@
     },
     "val_mean_engine_rmse": 13.8062,
     "val_final_cycle_rmse": 2.617,
-    "training_time_sec": 0.64
+    "training_time_sec": 0.64,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD001_RandomForest_SummaryStats_Tier3_Extended24": {
     "subset": "FD001",
@@ -361,7 +548,16 @@
     },
     "val_mean_engine_rmse": 13.9972,
     "val_final_cycle_rmse": 2.7969,
-    "training_time_sec": 0.55
+    "training_time_sec": 0.55,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_TrainingMean_Tier3_Extended24": {
     "subset": "FD002",
@@ -389,7 +585,11 @@
     },
     "val_mean_engine_rmse": 41.7013,
     "val_final_cycle_rmse": 80.5846,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "strategy": "empirical_training_mean",
+      "fitted_mean_value": 80.5846
+    }
   },
   "FD002_Ridge_FinalObservation_Tier1_Core14": {
     "subset": "FD002",
@@ -417,7 +617,14 @@
     },
     "val_mean_engine_rmse": 24.0762,
     "val_final_cycle_rmse": 15.2767,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_Ridge_FinalObservation_Tier2_Operational17": {
     "subset": "FD002",
@@ -445,7 +652,14 @@
     },
     "val_mean_engine_rmse": 23.3304,
     "val_final_cycle_rmse": 15.0587,
-    "training_time_sec": 0.01
+    "training_time_sec": 0.01,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_Ridge_FinalObservation_Tier3_Extended24": {
     "subset": "FD002",
@@ -473,7 +687,14 @@
     },
     "val_mean_engine_rmse": 22.7114,
     "val_final_cycle_rmse": 14.769,
-    "training_time_sec": 0.01
+    "training_time_sec": 0.01,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_Ridge_FlattenedWindow_Tier1_Core14": {
     "subset": "FD002",
@@ -501,7 +722,14 @@
     },
     "val_mean_engine_rmse": 19.2896,
     "val_final_cycle_rmse": 20.9469,
-    "training_time_sec": 0.1
+    "training_time_sec": 0.1,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_Ridge_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD002",
@@ -529,7 +757,14 @@
     },
     "val_mean_engine_rmse": 19.0826,
     "val_final_cycle_rmse": 22.0626,
-    "training_time_sec": 0.1
+    "training_time_sec": 0.1,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_Ridge_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD002",
@@ -557,7 +792,14 @@
     },
     "val_mean_engine_rmse": 18.7097,
     "val_final_cycle_rmse": 24.1805,
-    "training_time_sec": 0.14
+    "training_time_sec": 0.14,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD002_RandomForest_FlattenedWindow_Tier1_Core14": {
     "subset": "FD002",
@@ -585,7 +827,16 @@
     },
     "val_mean_engine_rmse": 22.1848,
     "val_final_cycle_rmse": 18.6288,
-    "training_time_sec": 4.78
+    "training_time_sec": 4.78,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_RandomForest_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD002",
@@ -613,7 +864,16 @@
     },
     "val_mean_engine_rmse": 22.3045,
     "val_final_cycle_rmse": 18.9569,
-    "training_time_sec": 5.03
+    "training_time_sec": 5.03,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_RandomForest_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD002",
@@ -641,7 +901,16 @@
     },
     "val_mean_engine_rmse": 22.4947,
     "val_final_cycle_rmse": 20.437,
-    "training_time_sec": 5.23
+    "training_time_sec": 5.23,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_RandomForest_SummaryStats_Tier1_Core14": {
     "subset": "FD002",
@@ -669,7 +938,16 @@
     },
     "val_mean_engine_rmse": 20.8397,
     "val_final_cycle_rmse": 8.4864,
-    "training_time_sec": 5.31
+    "training_time_sec": 5.31,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_RandomForest_SummaryStats_Tier2_Operational17": {
     "subset": "FD002",
@@ -697,7 +975,16 @@
     },
     "val_mean_engine_rmse": 20.8233,
     "val_final_cycle_rmse": 8.6009,
-    "training_time_sec": 7.2
+    "training_time_sec": 7.2,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD002_RandomForest_SummaryStats_Tier3_Extended24": {
     "subset": "FD002",
@@ -725,7 +1012,16 @@
     },
     "val_mean_engine_rmse": 20.9593,
     "val_final_cycle_rmse": 8.8926,
-    "training_time_sec": 1.85
+    "training_time_sec": 1.85,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_TrainingMean_Tier3_Extended24": {
     "subset": "FD003",
@@ -753,7 +1049,11 @@
     },
     "val_mean_engine_rmse": 42.53,
     "val_final_cycle_rmse": 89.724,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "strategy": "empirical_training_mean",
+      "fitted_mean_value": 89.724
+    }
   },
   "FD003_Ridge_FinalObservation_Tier1_Core14": {
     "subset": "FD003",
@@ -781,7 +1081,14 @@
     },
     "val_mean_engine_rmse": 19.4464,
     "val_final_cycle_rmse": 22.3802,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_Ridge_FinalObservation_Tier2_Operational17": {
     "subset": "FD003",
@@ -809,7 +1116,14 @@
     },
     "val_mean_engine_rmse": 19.4505,
     "val_final_cycle_rmse": 22.3628,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_Ridge_FinalObservation_Tier3_Extended24": {
     "subset": "FD003",
@@ -837,7 +1151,14 @@
     },
     "val_mean_engine_rmse": 18.7484,
     "val_final_cycle_rmse": 26.9607,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_Ridge_FlattenedWindow_Tier1_Core14": {
     "subset": "FD003",
@@ -865,7 +1186,14 @@
     },
     "val_mean_engine_rmse": 16.5467,
     "val_final_cycle_rmse": 32.1196,
-    "training_time_sec": 0.05
+    "training_time_sec": 0.05,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_Ridge_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD003",
@@ -893,7 +1221,14 @@
     },
     "val_mean_engine_rmse": 16.5412,
     "val_final_cycle_rmse": 32.0862,
-    "training_time_sec": 0.06
+    "training_time_sec": 0.06,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_Ridge_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD003",
@@ -921,7 +1256,14 @@
     },
     "val_mean_engine_rmse": 16.5159,
     "val_final_cycle_rmse": 32.2287,
-    "training_time_sec": 0.09
+    "training_time_sec": 0.09,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD003_RandomForest_FlattenedWindow_Tier1_Core14": {
     "subset": "FD003",
@@ -949,7 +1291,16 @@
     },
     "val_mean_engine_rmse": 14.6727,
     "val_final_cycle_rmse": 4.7908,
-    "training_time_sec": 1.78
+    "training_time_sec": 1.78,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_RandomForest_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD003",
@@ -977,7 +1328,16 @@
     },
     "val_mean_engine_rmse": 14.7601,
     "val_final_cycle_rmse": 4.947,
-    "training_time_sec": 1.77
+    "training_time_sec": 1.77,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_RandomForest_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD003",
@@ -1005,7 +1365,16 @@
     },
     "val_mean_engine_rmse": 14.8129,
     "val_final_cycle_rmse": 5.0149,
-    "training_time_sec": 1.63
+    "training_time_sec": 1.63,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_RandomForest_SummaryStats_Tier1_Core14": {
     "subset": "FD003",
@@ -1033,7 +1402,16 @@
     },
     "val_mean_engine_rmse": 12.4227,
     "val_final_cycle_rmse": 2.8409,
-    "training_time_sec": 0.82
+    "training_time_sec": 0.82,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_RandomForest_SummaryStats_Tier2_Operational17": {
     "subset": "FD003",
@@ -1061,7 +1439,16 @@
     },
     "val_mean_engine_rmse": 12.4813,
     "val_final_cycle_rmse": 3.0465,
-    "training_time_sec": 0.81
+    "training_time_sec": 0.81,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD003_RandomForest_SummaryStats_Tier3_Extended24": {
     "subset": "FD003",
@@ -1089,7 +1476,16 @@
     },
     "val_mean_engine_rmse": 12.6139,
     "val_final_cycle_rmse": 2.9639,
-    "training_time_sec": 0.71
+    "training_time_sec": 0.71,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_TrainingMean_Tier3_Extended24": {
     "subset": "FD004",
@@ -1117,7 +1513,11 @@
     },
     "val_mean_engine_rmse": 41.7952,
     "val_final_cycle_rmse": 88.3473,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "strategy": "empirical_training_mean",
+      "fitted_mean_value": 88.3473
+    }
   },
   "FD004_Ridge_FinalObservation_Tier1_Core14": {
     "subset": "FD004",
@@ -1145,7 +1545,14 @@
     },
     "val_mean_engine_rmse": 29.1305,
     "val_final_cycle_rmse": 39.7095,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_Ridge_FinalObservation_Tier2_Operational17": {
     "subset": "FD004",
@@ -1173,7 +1580,14 @@
     },
     "val_mean_engine_rmse": 22.8267,
     "val_final_cycle_rmse": 19.4059,
-    "training_time_sec": 0.0
+    "training_time_sec": 0.0,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_Ridge_FinalObservation_Tier3_Extended24": {
     "subset": "FD004",
@@ -1201,7 +1615,14 @@
     },
     "val_mean_engine_rmse": 22.2506,
     "val_final_cycle_rmse": 18.2984,
-    "training_time_sec": 0.01
+    "training_time_sec": 0.01,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_Ridge_FlattenedWindow_Tier1_Core14": {
     "subset": "FD004",
@@ -1229,7 +1650,14 @@
     },
     "val_mean_engine_rmse": 22.2671,
     "val_final_cycle_rmse": 18.8362,
-    "training_time_sec": 0.1
+    "training_time_sec": 0.1,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_Ridge_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD004",
@@ -1257,7 +1685,14 @@
     },
     "val_mean_engine_rmse": 19.354,
     "val_final_cycle_rmse": 17.5885,
-    "training_time_sec": 0.11
+    "training_time_sec": 0.11,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_Ridge_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD004",
@@ -1285,7 +1720,14 @@
     },
     "val_mean_engine_rmse": 18.1353,
     "val_final_cycle_rmse": 21.0135,
-    "training_time_sec": 0.17
+    "training_time_sec": 0.17,
+    "hyperparameters": {
+      "alpha": 1.0,
+      "solver": "auto",
+      "fit_intercept": true,
+      "random_state": 42,
+      "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance"
+    }
   },
   "FD004_RandomForest_FlattenedWindow_Tier1_Core14": {
     "subset": "FD004",
@@ -1313,7 +1755,16 @@
     },
     "val_mean_engine_rmse": 19.0509,
     "val_final_cycle_rmse": 20.8015,
-    "training_time_sec": 5.59
+    "training_time_sec": 5.59,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_RandomForest_FlattenedWindow_Tier2_Operational17": {
     "subset": "FD004",
@@ -1341,7 +1792,16 @@
     },
     "val_mean_engine_rmse": 19.2179,
     "val_final_cycle_rmse": 20.9918,
-    "training_time_sec": 6.12
+    "training_time_sec": 6.12,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_RandomForest_FlattenedWindow_Tier3_Extended24": {
     "subset": "FD004",
@@ -1369,7 +1829,16 @@
     },
     "val_mean_engine_rmse": 19.1202,
     "val_final_cycle_rmse": 22.0252,
-    "training_time_sec": 10.86
+    "training_time_sec": 10.86,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_RandomForest_SummaryStats_Tier1_Core14": {
     "subset": "FD004",
@@ -1397,7 +1866,16 @@
     },
     "val_mean_engine_rmse": 17.5165,
     "val_final_cycle_rmse": 11.5783,
-    "training_time_sec": 6.9
+    "training_time_sec": 6.9,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_RandomForest_SummaryStats_Tier2_Operational17": {
     "subset": "FD004",
@@ -1425,7 +1903,16 @@
     },
     "val_mean_engine_rmse": 17.4941,
     "val_final_cycle_rmse": 11.9495,
-    "training_time_sec": 4.25
+    "training_time_sec": 4.25,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
   },
   "FD004_RandomForest_SummaryStats_Tier3_Extended24": {
     "subset": "FD004",
@@ -1453,6 +1940,30 @@
     },
     "val_mean_engine_rmse": 16.9655,
     "val_final_cycle_rmse": 12.7564,
-    "training_time_sec": 5.88
+    "training_time_sec": 5.88,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 15,
+      "min_samples_split": 10,
+      "min_samples_leaf": 4,
+      "max_features": "sqrt",
+      "random_state": 42,
+      "n_jobs": -1
+    }
+  },
+  "_environment_metadata": {
+    "python_version": "3.15.0",
+    "python_build": "3.15.0 (main, Oct 14 2026, 01:12:50) [MSC v.1951 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "xgboost": "3.4.1",
+      "torch": "2.15.0+cpu",
+      "matplotlib": "3.11.2"
+    },
+    "recorded_for": "NASA C-MAPSS Phase 4 Roadmap Step 4.6 Compliance"
   }
 }

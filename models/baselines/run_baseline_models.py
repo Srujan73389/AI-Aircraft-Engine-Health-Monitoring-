@@ -177,6 +177,69 @@ class ConstantMeanRegressor:
 
 
 # =============================================================================
+# MANIFEST METADATA GENERATORS
+# =============================================================================
+
+def build_project_configuration() -> dict:
+    """Build standardized project configuration metadata for Step 4.6 compliance."""
+    return {
+        "global_random_seed": 42,
+        "target_definition": {
+            "target_name": "Remaining Useful Life (RUL)",
+            "target_unit": "operational_cycles",
+            "training_target_capping": 125.0,
+            "primary_validation_capping": 125.0,
+            "diagnostic_validation_target": "uncapped",
+            "official_test_target": "uncapped",
+            "prediction_policy": "raw_unclipped",
+            "scoring_error_clipping": [-500.0, 500.0],
+            "scoring_error_clipping_purpose": "numerical_protection_against_overflow",
+        },
+        "temporal_window": {
+            "window_size": 30,
+            "stride": 1,
+            "short_test_engine_padding": "left-edge replication of initial observation (cycle t=1 repeated backwards)",
+        },
+        "feature_tiers": {
+            "Tier1_Core14": list(TIER1_CORE_SENSORS),
+            "Tier2_Operational17": list(TIER2_MULTI_CONDITION),
+            "Tier3_Extended24": list(TIER3_EXTENDED_ALL),
+        },
+        "summary_statistics_definition": {
+            "window_length": 30,
+            "statistics": ["mean", "std", "min", "max", "ols_linear_trend_slope"],
+            "formula_notes": "ols_linear_trend_slope computed over discrete time index t in [0, 29] via closed-form OLS formula: sum((t - t_mean)*(x - x_mean)) / sum((t - t_mean)**2)",
+        },
+    }
+
+
+def get_environment_metadata() -> dict:
+    """Dynamically extract environment and package versions for Step 4.6 compliance."""
+    import platform
+    import scipy
+    import sklearn
+    import xgboost
+    import torch
+    import matplotlib
+
+    return {
+        "python_version": platform.python_version(),
+        "python_build": platform.python_build()[0] + f" ({platform.python_build()[1]}) [{platform.python_compiler()}]",
+        "platform": platform.platform(),
+        "packages": {
+            "numpy": np.__version__,
+            "pandas": pd.__version__,
+            "scipy": scipy.__version__,
+            "scikit-learn": sklearn.__version__,
+            "xgboost": xgboost.__version__,
+            "torch": torch.__version__,
+            "matplotlib": matplotlib.__version__,
+        },
+        "recorded_for": "NASA C-MAPSS Phase 4 Roadmap Step 4.6 Compliance",
+    }
+
+
+# =============================================================================
 # MAIN BENCHMARK RUNNER
 # =============================================================================
 
@@ -470,6 +533,33 @@ def main():
                 "training_time_sec": round(elapsed, 2),
             })
 
+            # Define hyperparameters for manifest
+            if m_family == "ConstantMean":
+                hp_dict = {
+                    "strategy": "empirical_training_mean",
+                    "fitted_mean_value": round(float(model.mean_value_), 4),
+                }
+            elif m_family == "Ridge":
+                hp_dict = {
+                    "alpha": 1.0,
+                    "solver": "auto",
+                    "fit_intercept": True,
+                    "random_state": RANDOM_STATE,
+                    "note": "Deterministic solver (auto selects Cholesky/SVD); random_state parameter accepted by constructor but does not introduce stochastic variance",
+                }
+            elif m_family == "RandomForest":
+                hp_dict = {
+                    "n_estimators": 100,
+                    "max_depth": 15,
+                    "min_samples_split": 10,
+                    "min_samples_leaf": 4,
+                    "max_features": "sqrt",
+                    "random_state": RANDOM_STATE,
+                    "n_jobs": -1,
+                }
+            else:
+                hp_dict = {}
+
             # Manifest configuration record
             manifest_records[f"{subset}_{m_variant}_{tier}"] = {
                 "subset": subset,
@@ -477,6 +567,7 @@ def main():
                 "model_variant": m_variant,
                 "feature_tier": tier,
                 "feature_dim": f_dim,
+                "hyperparameters": hp_dict,
                 "val_capped_metrics": m_val_capped,
                 "val_uncapped_metrics": m_val_uncapped,
                 "test_uncapped_metrics": m_test_full,
@@ -502,10 +593,15 @@ def main():
     df_engine.to_csv(engine_csv_path, index=False)
     print(f"[SAVE] Per-engine validation metrics: {engine_csv_path}")
 
-    # Save baseline manifest JSON
+    # Save baseline manifest JSON with standardized Step 4.6 metadata
     manifest_path = os.path.join(baselines_dir, "baseline_manifest.json")
-    with open(manifest_path, "w") as f:
-        json.dump(manifest_records, f, indent=2)
+    final_manifest = {
+        "_project_configuration": build_project_configuration(),
+        **manifest_records,
+        "_environment_metadata": get_environment_metadata(),
+    }
+    with open(manifest_path, "w", encoding="utf-8") as f:
+        json.dump(final_manifest, f, indent=2)
     print(f"[SAVE] Baseline execution manifest: {manifest_path}")
 
     # Display summary of best models per subset (selected strictly by Validation Capped RMSE)

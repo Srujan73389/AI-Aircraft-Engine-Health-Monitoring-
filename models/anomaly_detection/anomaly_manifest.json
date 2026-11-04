@@ -1,0 +1,456 @@
+{
+  "_environment_metadata": {
+    "python_version": "3.15.0",
+    "python_build": "3.15.0 (main, Oct 14 2026, 01:12:50) [MSC v.1951 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "matplotlib": "3.11.2"
+    },
+    "recorded_for": "NASA C-MAPSS Phase 4 Step 4.4 Anomaly Detection"
+  },
+  "methodology": {
+    "primary_model": "M1_RegimeAware_IsolationForest",
+    "benchmark_model": "M2_PCA_SPE",
+    "ablation_model": "M3_Unconditioned_IsolationForest (FD002/FD004 only)",
+    "split_hierarchy": "Engine-level 3-cohort (Cohort A: Fitting, Cohort B: Threshold Calibration, Cohort C: Validation)",
+    "threshold_calibration_percentile": 95.0,
+    "persistence_condition": "3 consecutive cycles above tau (alert confirmed at 3rd cycle)",
+    "leakage_safeguard": "Cohort C untouched; calibration strictly on Cohort B healthy data"
+  },
+  "experiments": {
+    "FD001_M1_RegimeAware_iForest": {
+      "subset": "FD001",
+      "model_id": "M1_RegimeAware_iForest",
+      "model_name": "Regime-Aware Isolation Forest",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 64,
+      "cohort_b_engines_count": 16,
+      "cohort_c_validation_engines_count": 20,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.03116543577016492
+      },
+      "metrics": {
+        "early_life_far": 0.04,
+        "late_life_sensitivity": 1.0,
+        "mean_spearman_correlation": 0.6822,
+        "total_validation_engines": 20,
+        "persistent_detected_count": 20,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 151.1,
+        "median_ttfd": 139.0,
+        "mean_lead_time": 63.45,
+        "median_lead_time": 59.5
+      }
+    },
+    "FD001_M2_PCA_SPE": {
+      "subset": "FD001",
+      "model_id": "M2_PCA_SPE",
+      "model_name": "PCA Squared Prediction Error",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 64,
+      "cohort_b_engines_count": 16,
+      "cohort_c_validation_engines_count": 20,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": 1.610082983970642
+      },
+      "metrics": {
+        "early_life_far": 0.0433,
+        "late_life_sensitivity": 0.1238,
+        "mean_spearman_correlation": 0.0839,
+        "total_validation_engines": 20,
+        "persistent_detected_count": 3,
+        "missed_detection_count": 17,
+        "missed_detection_rate": 0.85,
+        "mean_ttfd": 184.33,
+        "median_ttfd": 190.0,
+        "mean_lead_time": 5.0,
+        "median_lead_time": 5.0
+      }
+    },
+    "FD002_M1_RegimeAware_iForest": {
+      "subset": "FD002",
+      "model_id": "M1_RegimeAware_iForest",
+      "model_name": "Regime-Aware Isolation Forest",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 166,
+      "cohort_b_engines_count": 42,
+      "cohort_c_validation_engines_count": 52,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.0450506445762651
+      },
+      "metrics": {
+        "early_life_far": 0.059,
+        "late_life_sensitivity": 0.9973,
+        "mean_spearman_correlation": 0.7113,
+        "total_validation_engines": 52,
+        "persistent_detected_count": 52,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 139.02,
+        "median_ttfd": 131.5,
+        "mean_lead_time": 70.02,
+        "median_lead_time": 58.5
+      }
+    },
+    "FD002_M2_PCA_SPE": {
+      "subset": "FD002",
+      "model_id": "M2_PCA_SPE",
+      "model_name": "PCA Squared Prediction Error",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 166,
+      "cohort_b_engines_count": 42,
+      "cohort_c_validation_engines_count": 52,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": 1.2740291357040405
+      },
+      "metrics": {
+        "early_life_far": 0.0609,
+        "late_life_sensitivity": 0.0742,
+        "mean_spearman_correlation": 0.0182,
+        "total_validation_engines": 52,
+        "persistent_detected_count": 1,
+        "missed_detection_count": 51,
+        "missed_detection_rate": 0.9808,
+        "mean_ttfd": 189.0,
+        "median_ttfd": 189.0,
+        "mean_lead_time": 176.0,
+        "median_lead_time": 176.0
+      }
+    },
+    "FD002_M3_Unconditioned_iForest": {
+      "subset": "FD002",
+      "model_id": "M3_Unconditioned_iForest",
+      "model_name": "Unconditioned Isolation Forest (Ablation)",
+      "operating_regime_mode": "Unconditioned (Raw Sensors)",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 166,
+      "cohort_b_engines_count": 42,
+      "cohort_c_validation_engines_count": 52,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.0036726584330971017
+      },
+      "metrics": {
+        "early_life_far": 0.0423,
+        "late_life_sensitivity": 0.9963,
+        "mean_spearman_correlation": 0.6863,
+        "total_validation_engines": 52,
+        "persistent_detected_count": 52,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 148.62,
+        "median_ttfd": 138.0,
+        "mean_lead_time": 60.42,
+        "median_lead_time": 58.0
+      }
+    },
+    "FD003_M1_RegimeAware_iForest": {
+      "subset": "FD003",
+      "model_id": "M1_RegimeAware_iForest",
+      "model_name": "Regime-Aware Isolation Forest",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 64,
+      "cohort_b_engines_count": 16,
+      "cohort_c_validation_engines_count": 20,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.03873135691739463
+      },
+      "metrics": {
+        "early_life_far": 0.0667,
+        "late_life_sensitivity": 1.0,
+        "mean_spearman_correlation": 0.7967,
+        "total_validation_engines": 20,
+        "persistent_detected_count": 20,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 138.8,
+        "median_ttfd": 140.5,
+        "mean_lead_time": 88.35,
+        "median_lead_time": 60.0
+      }
+    },
+    "FD003_M2_PCA_SPE": {
+      "subset": "FD003",
+      "model_id": "M2_PCA_SPE",
+      "model_name": "PCA Squared Prediction Error",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 64,
+      "cohort_b_engines_count": 16,
+      "cohort_c_validation_engines_count": 20,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": 1.1916099786758423
+      },
+      "metrics": {
+        "early_life_far": 0.0383,
+        "late_life_sensitivity": 0.4238,
+        "mean_spearman_correlation": 0.2688,
+        "total_validation_engines": 20,
+        "persistent_detected_count": 10,
+        "missed_detection_count": 10,
+        "missed_detection_rate": 0.5,
+        "mean_ttfd": 152.8,
+        "median_ttfd": 156.0,
+        "mean_lead_time": 44.6,
+        "median_lead_time": 44.5
+      }
+    },
+    "FD004_M1_RegimeAware_iForest": {
+      "subset": "FD004",
+      "model_id": "M1_RegimeAware_iForest",
+      "model_name": "Regime-Aware Isolation Forest",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 159,
+      "cohort_b_engines_count": 40,
+      "cohort_c_validation_engines_count": 50,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.054125832789665325
+      },
+      "metrics": {
+        "early_life_far": 0.0367,
+        "late_life_sensitivity": 1.0,
+        "mean_spearman_correlation": 0.7298,
+        "total_validation_engines": 50,
+        "persistent_detected_count": 50,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 174.22,
+        "median_ttfd": 167.5,
+        "mean_lead_time": 80.84,
+        "median_lead_time": 69.5
+      }
+    },
+    "FD004_M2_PCA_SPE": {
+      "subset": "FD004",
+      "model_id": "M2_PCA_SPE",
+      "model_name": "PCA Squared Prediction Error",
+      "operating_regime_mode": "Regime-Normalized",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 159,
+      "cohort_b_engines_count": 40,
+      "cohort_c_validation_engines_count": 50,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": 1.8685108423233032
+      },
+      "metrics": {
+        "early_life_far": 0.0447,
+        "late_life_sensitivity": 0.4467,
+        "mean_spearman_correlation": 0.2496,
+        "total_validation_engines": 50,
+        "persistent_detected_count": 30,
+        "missed_detection_count": 20,
+        "missed_detection_rate": 0.4,
+        "mean_ttfd": 242.03,
+        "median_ttfd": 254.5,
+        "mean_lead_time": 25.77,
+        "median_lead_time": 19.0
+      }
+    },
+    "FD004_M3_Unconditioned_iForest": {
+      "subset": "FD004",
+      "model_id": "M3_Unconditioned_iForest",
+      "model_name": "Unconditioned Isolation Forest (Ablation)",
+      "operating_regime_mode": "Unconditioned (Raw Sensors)",
+      "feature_columns": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "cohort_a_engines_count": 159,
+      "cohort_b_engines_count": 40,
+      "cohort_c_validation_engines_count": 50,
+      "threshold_calibration": {
+        "cohort": "Cohort B (Training Engines Group 2)",
+        "percentile": 95.0,
+        "threshold_value": -0.013526981717770998
+      },
+      "metrics": {
+        "early_life_far": 0.0427,
+        "late_life_sensitivity": 1.0,
+        "mean_spearman_correlation": 0.7054,
+        "total_validation_engines": 50,
+        "persistent_detected_count": 50,
+        "missed_detection_count": 0,
+        "missed_detection_rate": 0.0,
+        "mean_ttfd": 169.34,
+        "median_ttfd": 161.5,
+        "mean_lead_time": 85.72,
+        "median_lead_time": 69.5
+      }
+    }
+  }
+}

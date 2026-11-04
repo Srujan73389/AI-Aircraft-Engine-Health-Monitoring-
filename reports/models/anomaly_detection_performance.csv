@@ -1,0 +1,11 @@
+subset,model_id,model_name,operating_regime_mode,feature_count,threshold_tau,calibration_nominal_far,early_life_far,late_life_sensitivity,mean_spearman_correlation,total_validation_engines,persistent_detected_count,missed_detection_count,missed_detection_rate,mean_ttfd,median_ttfd,mean_lead_time,median_lead_time,training_time_sec
+FD001,M1_RegimeAware_iForest,Regime-Aware Isolation Forest,Regime-Normalized,14,-0.031165,0.05,0.04,1.0,0.6822,20,20,0,0.0,151.1,139.0,63.45,59.5,0.28
+FD001,M2_PCA_SPE,PCA Squared Prediction Error,Regime-Normalized,14,1.610083,0.05,0.0433,0.1238,0.0839,20,3,17,0.85,184.33,190.0,5.0,5.0,0.04
+FD002,M1_RegimeAware_iForest,Regime-Aware Isolation Forest,Regime-Normalized,14,-0.045051,0.05,0.059,0.9973,0.7113,52,52,0,0.0,139.02,131.5,70.02,58.5,0.39
+FD002,M2_PCA_SPE,PCA Squared Prediction Error,Regime-Normalized,14,1.274029,0.05,0.0609,0.0742,0.0182,52,1,51,0.9808,189.0,189.0,176.0,176.0,0.08
+FD002,M3_Unconditioned_iForest,Unconditioned Isolation Forest (Ablation),Unconditioned (Raw Sensors),14,-0.003673,0.05,0.0423,0.9963,0.6863,52,52,0,0.0,148.62,138.0,60.42,58.0,0.44
+FD003,M1_RegimeAware_iForest,Regime-Aware Isolation Forest,Regime-Normalized,14,-0.038731,0.05,0.0667,1.0,0.7967,20,20,0,0.0,138.8,140.5,88.35,60.0,0.31
+FD003,M2_PCA_SPE,PCA Squared Prediction Error,Regime-Normalized,14,1.19161,0.05,0.0383,0.4238,0.2688,20,10,10,0.5,152.8,156.0,44.6,44.5,0.03
+FD004,M1_RegimeAware_iForest,Regime-Aware Isolation Forest,Regime-Normalized,14,-0.054126,0.05,0.0367,1.0,0.7298,50,50,0,0.0,174.22,167.5,80.84,69.5,0.44
+FD004,M2_PCA_SPE,PCA Squared Prediction Error,Regime-Normalized,14,1.868511,0.05,0.0447,0.4467,0.2496,50,30,20,0.4,242.03,254.5,25.77,19.0,0.07
+FD004,M3_Unconditioned_iForest,Unconditioned Isolation Forest (Ablation),Unconditioned (Raw Sensors),14,-0.013527,0.05,0.0427,1.0,0.7054,50,50,0,0.0,169.34,161.5,85.72,69.5,0.5

@@ -1,0 +1,9 @@
+subset,model_family,model_variant,feature_tier,historical_val_capped_rmse,reproduced_val_capped_rmse,delta_val_rmse,historical_test_rmse,reproduced_test_rmse,delta_test_rmse,tolerance_status
+FD001,XGBoost,XGBoost_Tuned_SummaryStats,Tier1_Core14,12.7506,12.7506,4.6e-05,13.477,13.477,2.4e-05,EXACT / ZERO DRIFT
+FD001,LSTM,Stacked_LSTM,Tier1_Core14,13.1011,13.1011,4.5e-05,14.8409,14.8409,3.3e-05,EXACT / ZERO DRIFT
+FD002,XGBoost,XGBoost_FlattenedWindow,Tier3_Extended24,19.3303,19.3303,4.4e-05,30.0483,30.0483,0.0,EXACT / ZERO DRIFT
+FD002,LSTM,Stacked_LSTM,Tier3_Extended24,17.7875,17.7875,1.1e-05,29.0728,29.0728,3.5e-05,EXACT / ZERO DRIFT
+FD003,XGBoost,XGBoost_Tuned_SummaryStats,Tier3_Extended24,12.7926,12.7926,2e-06,14.2476,14.2476,4.6e-05,EXACT / ZERO DRIFT
+FD003,LSTM,Single_LSTM,Tier3_Extended24,14.1079,14.1079,3.7e-05,17.4228,17.4228,1.3e-05,EXACT / ZERO DRIFT
+FD004,XGBoost,XGBoost_FlattenedWindow,Tier3_Extended24,15.8682,15.8682,4.1e-05,29.7334,29.7334,4.5e-05,EXACT / ZERO DRIFT
+FD004,LSTM,Stacked_LSTM,Tier3_Extended24,15.2748,15.2748,1.1e-05,30.3794,30.3794,5e-05,EXACT / ZERO DRIFT

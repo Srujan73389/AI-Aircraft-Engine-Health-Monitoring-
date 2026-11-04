@@ -1,0 +1,94 @@
+{
+  "FD001_XGBoost": {
+    "subset": "FD001",
+    "architecture": "XGBoost",
+    "variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "checkpoint_file": "xgb_FD001_champion.json",
+    "file_size_bytes": 327858,
+    "reproduced_val_capped_rmse": 12.7506,
+    "reproduced_test_uncapped_rmse": 13.477
+  },
+  "FD001_LSTM": {
+    "subset": "FD001",
+    "architecture": "LSTM",
+    "variant": "Stacked_LSTM",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 14,
+    "checkpoint_file": "lstm_FD001_champion.pt",
+    "file_size_bytes": 140055,
+    "best_epoch": 44,
+    "reproduced_val_capped_rmse": 13.1011,
+    "reproduced_test_uncapped_rmse": 14.8409
+  },
+  "FD002_XGBoost": {
+    "subset": "FD002",
+    "architecture": "XGBoost",
+    "variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "checkpoint_file": "xgb_FD002_champion.json",
+    "file_size_bytes": 687186,
+    "reproduced_val_capped_rmse": 19.3303,
+    "reproduced_test_uncapped_rmse": 30.0483
+  },
+  "FD002_LSTM": {
+    "subset": "FD002",
+    "architecture": "LSTM",
+    "variant": "Stacked_LSTM",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "checkpoint_file": "lstm_FD002_champion.pt",
+    "file_size_bytes": 150487,
+    "best_epoch": 58,
+    "reproduced_val_capped_rmse": 17.7875,
+    "reproduced_test_uncapped_rmse": 29.0728
+  },
+  "FD003_XGBoost": {
+    "subset": "FD003",
+    "architecture": "XGBoost",
+    "variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "checkpoint_file": "xgb_FD003_champion.json",
+    "file_size_bytes": 289722,
+    "reproduced_val_capped_rmse": 12.7926,
+    "reproduced_test_uncapped_rmse": 14.2476
+  },
+  "FD003_LSTM": {
+    "subset": "FD003",
+    "architecture": "LSTM",
+    "variant": "Single_LSTM",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "checkpoint_file": "lstm_FD003_champion.pt",
+    "file_size_bytes": 64821,
+    "best_epoch": 29,
+    "reproduced_val_capped_rmse": 14.1079,
+    "reproduced_test_uncapped_rmse": 17.4228
+  },
+  "FD004_XGBoost": {
+    "subset": "FD004",
+    "architecture": "XGBoost",
+    "variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "checkpoint_file": "xgb_FD004_champion.json",
+    "file_size_bytes": 679068,
+    "reproduced_val_capped_rmse": 15.8682,
+    "reproduced_test_uncapped_rmse": 29.7334
+  },
+  "FD004_LSTM": {
+    "subset": "FD004",
+    "architecture": "LSTM",
+    "variant": "Stacked_LSTM",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "checkpoint_file": "lstm_FD004_champion.pt",
+    "file_size_bytes": 150487,
+    "best_epoch": 58,
+    "reproduced_val_capped_rmse": 15.2748,
+    "reproduced_test_uncapped_rmse": 30.3794
+  }
+}

@@ -1,0 +1,1677 @@
+{
+  "_project_configuration": {
+    "global_random_seed": 42,
+    "target_definition": {
+      "target_name": "Remaining Useful Life (RUL)",
+      "target_unit": "operational_cycles",
+      "training_target_capping": 125.0,
+      "primary_validation_capping": 125.0,
+      "diagnostic_validation_target": "uncapped",
+      "official_test_target": "uncapped",
+      "prediction_policy": "raw_unclipped",
+      "scoring_error_clipping": [
+        -500.0,
+        500.0
+      ],
+      "scoring_error_clipping_purpose": "numerical_protection_against_overflow"
+    },
+    "temporal_window": {
+      "window_size": 30,
+      "stride": 1,
+      "short_test_engine_padding": "left-edge replication of initial observation (cycle t=1 repeated backwards)"
+    },
+    "feature_tiers": {
+      "Tier1_Core14": [
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "Tier2_Operational17": [
+        "op_setting_1",
+        "op_setting_2",
+        "op_setting_3",
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_17",
+        "sensor_20",
+        "sensor_21"
+      ],
+      "Tier3_Extended24": [
+        "op_setting_1",
+        "op_setting_2",
+        "op_setting_3",
+        "sensor_1",
+        "sensor_2",
+        "sensor_3",
+        "sensor_4",
+        "sensor_5",
+        "sensor_6",
+        "sensor_7",
+        "sensor_8",
+        "sensor_9",
+        "sensor_10",
+        "sensor_11",
+        "sensor_12",
+        "sensor_13",
+        "sensor_14",
+        "sensor_15",
+        "sensor_16",
+        "sensor_17",
+        "sensor_18",
+        "sensor_19",
+        "sensor_20",
+        "sensor_21"
+      ]
+    },
+    "summary_statistics_definition": {
+      "window_length": 30,
+      "statistics": [
+        "mean",
+        "std",
+        "min",
+        "max",
+        "ols_linear_trend_slope"
+      ],
+      "formula_notes": "ols_linear_trend_slope computed over discrete time index t in [0, 29] via closed-form OLS formula: sum((t - t_mean)*(x - x_mean)) / sum((t - t_mean)**2)"
+    }
+  },
+  "FD001_XGBoost_FinalObservation_Tier1_Core14": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 14,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.4023,
+      "mae": 15.0825,
+      "r2": 0.7622,
+      "score": 65248.32
+    },
+    "val_uncapped_metrics": {
+      "rmse": 45.7981,
+      "mae": 31.008,
+      "r2": 0.5025,
+      "score": 54968664.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 18.1485,
+      "mae": 13.3862,
+      "r2": 0.8093,
+      "score": 819.43
+    },
+    "val_mean_engine_rmse": 19.873,
+    "val_final_cycle_rmse": 3.4642,
+    "training_time_sec": 1.49
+  },
+  "FD001_XGBoost_FinalObservation_Tier2_Operational17": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 17,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.4856,
+      "mae": 15.136,
+      "r2": 0.7602,
+      "score": 66199.98
+    },
+    "val_uncapped_metrics": {
+      "rmse": 45.8795,
+      "mae": 31.0667,
+      "r2": 0.5007,
+      "score": 54743672.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 18.5004,
+      "mae": 14.031,
+      "r2": 0.8018,
+      "score": 773.41
+    },
+    "val_mean_engine_rmse": 19.9867,
+    "val_final_cycle_rmse": 3.4111,
+    "training_time_sec": 1.56
+  },
+  "FD001_XGBoost_FinalObservation_Tier3_Extended24": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.3974,
+      "mae": 15.0859,
+      "r2": 0.7623,
+      "score": 65822.36
+    },
+    "val_uncapped_metrics": {
+      "rmse": 45.8781,
+      "mae": 31.0193,
+      "r2": 0.5008,
+      "score": 56271476.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 18.2245,
+      "mae": 13.395,
+      "r2": 0.8077,
+      "score": 793.41
+    },
+    "val_mean_engine_rmse": 19.918,
+    "val_final_cycle_rmse": 3.6849,
+    "training_time_sec": 1.66
+  },
+  "FD001_XGBoost_FlattenedWindow_Tier1_Core14": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 420,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.3013,
+      "mae": 12.4116,
+      "r2": 0.8482,
+      "score": 18995.57
+    },
+    "val_uncapped_metrics": {
+      "rmse": 43.6748,
+      "mae": 28.2543,
+      "r2": 0.5476,
+      "score": 56751924.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 15.3068,
+      "mae": 11.5532,
+      "r2": 0.8643,
+      "score": 368.6
+    },
+    "val_mean_engine_rmse": 16.1771,
+    "val_final_cycle_rmse": 3.1884,
+    "training_time_sec": 12.98
+  },
+  "FD001_XGBoost_FlattenedWindow_Tier2_Operational17": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 510,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.3045,
+      "mae": 12.4344,
+      "r2": 0.8481,
+      "score": 18743.75
+    },
+    "val_uncapped_metrics": {
+      "rmse": 43.6697,
+      "mae": 28.2715,
+      "r2": 0.5477,
+      "score": 59768660.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 15.5682,
+      "mae": 12.137,
+      "r2": 0.8596,
+      "score": 366.26
+    },
+    "val_mean_engine_rmse": 16.18,
+    "val_final_cycle_rmse": 3.6183,
+    "training_time_sec": 6.84
+  },
+  "FD001_XGBoost_FlattenedWindow_Tier3_Extended24": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.1041,
+      "mae": 12.2286,
+      "r2": 0.8518,
+      "score": 18372.84
+    },
+    "val_uncapped_metrics": {
+      "rmse": 43.5667,
+      "mae": 28.0793,
+      "r2": 0.5498,
+      "score": 60349004.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 16.21,
+      "mae": 12.3423,
+      "r2": 0.8478,
+      "score": 464.68
+    },
+    "val_mean_engine_rmse": 15.9585,
+    "val_final_cycle_rmse": 3.0698,
+    "training_time_sec": 21.72
+  },
+  "FD001_XGBoost_SummaryStats_Tier1_Core14": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 12.9696,
+      "mae": 9.3714,
+      "r2": 0.9039,
+      "score": 11281.48
+    },
+    "val_uncapped_metrics": {
+      "rmse": 41.6199,
+      "mae": 25.2601,
+      "r2": 0.5891,
+      "score": 43933336.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 13.831,
+      "mae": 10.415,
+      "r2": 0.8892,
+      "score": 271.91
+    },
+    "val_mean_engine_rmse": 12.6252,
+    "val_final_cycle_rmse": 2.583,
+    "training_time_sec": 2.92
+  },
+  "FD001_XGBoost_SummaryStats_Tier2_Operational17": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 85,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.1623,
+      "mae": 9.7021,
+      "r2": 0.901,
+      "score": 11255.92
+    },
+    "val_uncapped_metrics": {
+      "rmse": 42.1452,
+      "mae": 25.5832,
+      "r2": 0.5787,
+      "score": 47357680.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.7783,
+      "mae": 11.0634,
+      "r2": 0.8735,
+      "score": 319.64
+    },
+    "val_mean_engine_rmse": 12.9117,
+    "val_final_cycle_rmse": 3.3819,
+    "training_time_sec": 3.96
+  },
+  "FD001_XGBoost_SummaryStats_Tier3_Extended24": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.4734,
+      "mae": 9.9482,
+      "r2": 0.8963,
+      "score": 12160.82
+    },
+    "val_uncapped_metrics": {
+      "rmse": 42.3378,
+      "mae": 25.8604,
+      "r2": 0.5748,
+      "score": 42184512.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.3194,
+      "mae": 10.6233,
+      "r2": 0.8813,
+      "score": 302.93
+    },
+    "val_mean_engine_rmse": 13.1741,
+    "val_final_cycle_rmse": 3.22,
+    "training_time_sec": 3.73
+  },
+  "FD001_XGBoost_Tuned_SummaryStats_Tier1_Core14": {
+    "subset": "FD001",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "hyperparameters": {
+      "n_estimators": 250,
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 5.0,
+      "early_stopping_rounds": 20,
+      "best_iteration": 137,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 12.7506,
+      "mae": 9.463,
+      "r2": 0.9071,
+      "score": 10191.29
+    },
+    "val_uncapped_metrics": {
+      "rmse": 41.6245,
+      "mae": 25.336,
+      "r2": 0.589,
+      "score": 42518100.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 13.477,
+      "mae": 10.1317,
+      "r2": 0.8948,
+      "score": 268.06
+    },
+    "val_mean_engine_rmse": 12.5614,
+    "val_final_cycle_rmse": 5.0349,
+    "training_time_sec": 4.61
+  },
+  "FD002_XGBoost_FinalObservation_Tier1_Core14": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 14,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.4461,
+      "mae": 15.5944,
+      "r2": 0.7615,
+      "score": 120179.42
+    },
+    "val_uncapped_metrics": {
+      "rmse": 46.4243,
+      "mae": 31.5751,
+      "r2": 0.4926,
+      "score": 206050272.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 29.8897,
+      "mae": 20.9268,
+      "r2": 0.6911,
+      "score": 13159.76
+    },
+    "val_mean_engine_rmse": 20.4238,
+    "val_final_cycle_rmse": 6.4756,
+    "training_time_sec": 3.73
+  },
+  "FD002_XGBoost_FinalObservation_Tier2_Operational17": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 17,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.4281,
+      "mae": 15.6018,
+      "r2": 0.762,
+      "score": 120090.09
+    },
+    "val_uncapped_metrics": {
+      "rmse": 46.4219,
+      "mae": 31.5822,
+      "r2": 0.4927,
+      "score": 202882816.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 29.9391,
+      "mae": 20.8986,
+      "r2": 0.6901,
+      "score": 12752.82
+    },
+    "val_mean_engine_rmse": 20.4038,
+    "val_final_cycle_rmse": 6.6486,
+    "training_time_sec": 2.86
+  },
+  "FD002_XGBoost_FinalObservation_Tier3_Extended24": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 20.3653,
+      "mae": 15.5521,
+      "r2": 0.7634,
+      "score": 121140.45
+    },
+    "val_uncapped_metrics": {
+      "rmse": 46.3664,
+      "mae": 31.5272,
+      "r2": 0.4939,
+      "score": 206067120.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 29.8746,
+      "mae": 20.7746,
+      "r2": 0.6914,
+      "score": 12395.58
+    },
+    "val_mean_engine_rmse": 20.3452,
+    "val_final_cycle_rmse": 6.3419,
+    "training_time_sec": 2.39
+  },
+  "FD002_XGBoost_FlattenedWindow_Tier1_Core14": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 420,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 19.4858,
+      "mae": 15.1136,
+      "r2": 0.7834,
+      "score": 93968.9
+    },
+    "val_uncapped_metrics": {
+      "rmse": 46.0497,
+      "mae": 31.087,
+      "r2": 0.5008,
+      "score": 230183712.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 30.1143,
+      "mae": 20.9673,
+      "r2": 0.6864,
+      "score": 13793.76
+    },
+    "val_mean_engine_rmse": 19.3641,
+    "val_final_cycle_rmse": 7.6773,
+    "training_time_sec": 16.51
+  },
+  "FD002_XGBoost_FlattenedWindow_Tier2_Operational17": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 510,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 19.3394,
+      "mae": 15.0505,
+      "r2": 0.7867,
+      "score": 89577.77
+    },
+    "val_uncapped_metrics": {
+      "rmse": 45.9653,
+      "mae": 31.0216,
+      "r2": 0.5026,
+      "score": 223925360.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 29.9696,
+      "mae": 20.8932,
+      "r2": 0.6894,
+      "score": 14456.27
+    },
+    "val_mean_engine_rmse": 19.2221,
+    "val_final_cycle_rmse": 7.6802,
+    "training_time_sec": 8.82
+  },
+  "FD002_XGBoost_FlattenedWindow_Tier3_Extended24": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 19.3303,
+      "mae": 15.0005,
+      "r2": 0.7869,
+      "score": 89244.93
+    },
+    "val_uncapped_metrics": {
+      "rmse": 46.0028,
+      "mae": 30.963,
+      "r2": 0.5018,
+      "score": 226851408.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 30.0483,
+      "mae": 20.7569,
+      "r2": 0.6878,
+      "score": 14159.01
+    },
+    "val_mean_engine_rmse": 19.2139,
+    "val_final_cycle_rmse": 7.2853,
+    "training_time_sec": 21.57
+  },
+  "FD002_XGBoost_SummaryStats_Tier1_Core14": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 22.0231,
+      "mae": 16.6592,
+      "r2": 0.7233,
+      "score": 161032.89
+    },
+    "val_uncapped_metrics": {
+      "rmse": 47.3863,
+      "mae": 32.5866,
+      "r2": 0.4714,
+      "score": 203613920.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.915,
+      "mae": 22.826,
+      "r2": 0.6478,
+      "score": 36184.81
+    },
+    "val_mean_engine_rmse": 21.2864,
+    "val_final_cycle_rmse": 6.3751,
+    "training_time_sec": 1.37
+  },
+  "FD002_XGBoost_SummaryStats_Tier2_Operational17": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 85,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 21.8023,
+      "mae": 16.6024,
+      "r2": 0.7289,
+      "score": 158163.28
+    },
+    "val_uncapped_metrics": {
+      "rmse": 47.2792,
+      "mae": 32.5468,
+      "r2": 0.4737,
+      "score": 191937600.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.694,
+      "mae": 22.3624,
+      "r2": 0.6527,
+      "score": 41283.86
+    },
+    "val_mean_engine_rmse": 21.1344,
+    "val_final_cycle_rmse": 6.8755,
+    "training_time_sec": 3.54
+  },
+  "FD002_XGBoost_SummaryStats_Tier3_Extended24": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 22.0103,
+      "mae": 16.7349,
+      "r2": 0.7237,
+      "score": 178958.59
+    },
+    "val_uncapped_metrics": {
+      "rmse": 47.5471,
+      "mae": 32.7028,
+      "r2": 0.4678,
+      "score": 247433232.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 32.1311,
+      "mae": 22.7433,
+      "r2": 0.643,
+      "score": 52189.11
+    },
+    "val_mean_engine_rmse": 21.4121,
+    "val_final_cycle_rmse": 7.3986,
+    "training_time_sec": 5.12
+  },
+  "FD002_XGBoost_Tuned_SummaryStats_Tier2_Operational17": {
+    "subset": "FD002",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 85,
+    "hyperparameters": {
+      "n_estimators": 250,
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 5.0,
+      "early_stopping_rounds": 20,
+      "best_iteration": 119,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 21.4461,
+      "mae": 16.7097,
+      "r2": 0.7377,
+      "score": 135494.95
+    },
+    "val_uncapped_metrics": {
+      "rmse": 47.2546,
+      "mae": 32.6926,
+      "r2": 0.4743,
+      "score": 175935824.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 32.1095,
+      "mae": 23.0662,
+      "r2": 0.6435,
+      "score": 23819.55
+    },
+    "val_mean_engine_rmse": 20.8742,
+    "val_final_cycle_rmse": 8.9769,
+    "training_time_sec": 5.29
+  },
+  "FD003_XGBoost_FinalObservation_Tier1_Core14": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 14,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.385,
+      "mae": 11.3234,
+      "r2": 0.8462,
+      "score": 37207.38
+    },
+    "val_uncapped_metrics": {
+      "rmse": 67.7668,
+      "mae": 37.8789,
+      "r2": 0.3713,
+      "score": 2861533495296.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 21.6608,
+      "mae": 16.0613,
+      "r2": 0.7262,
+      "score": 2590.55
+    },
+    "val_mean_engine_rmse": 16.0067,
+    "val_final_cycle_rmse": 4.5057,
+    "training_time_sec": 1.43
+  },
+  "FD003_XGBoost_FinalObservation_Tier2_Operational17": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 17,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.3855,
+      "mae": 11.3559,
+      "r2": 0.8462,
+      "score": 36247.22
+    },
+    "val_uncapped_metrics": {
+      "rmse": 67.8084,
+      "mae": 37.9171,
+      "r2": 0.3705,
+      "score": 2927708864512.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 21.4562,
+      "mae": 15.9081,
+      "r2": 0.7313,
+      "score": 3272.23
+    },
+    "val_mean_engine_rmse": 16.0033,
+    "val_final_cycle_rmse": 4.3274,
+    "training_time_sec": 1.42
+  },
+  "FD003_XGBoost_FinalObservation_Tier3_Extended24": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 15.9664,
+      "mae": 11.1878,
+      "r2": 0.854,
+      "score": 32489.4
+    },
+    "val_uncapped_metrics": {
+      "rmse": 67.8056,
+      "mae": 37.745,
+      "r2": 0.3706,
+      "score": 2942053908480.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 21.0327,
+      "mae": 16.0597,
+      "r2": 0.7418,
+      "score": 1997.15
+    },
+    "val_mean_engine_rmse": 15.6163,
+    "val_final_cycle_rmse": 4.1997,
+    "training_time_sec": 1.42
+  },
+  "FD003_XGBoost_FlattenedWindow_Tier1_Core14": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 420,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.7616,
+      "mae": 9.4975,
+      "r2": 0.8915,
+      "score": 17791.12
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.8339,
+      "mae": 35.9257,
+      "r2": 0.3885,
+      "score": 2877147840512.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 16.8788,
+      "mae": 12.5487,
+      "r2": 0.8337,
+      "score": 709.23
+    },
+    "val_mean_engine_rmse": 13.5657,
+    "val_final_cycle_rmse": 4.0359,
+    "training_time_sec": 14.46
+  },
+  "FD003_XGBoost_FlattenedWindow_Tier2_Operational17": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 510,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.8731,
+      "mae": 9.5455,
+      "r2": 0.8897,
+      "score": 18861.17
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.9643,
+      "mae": 35.9944,
+      "r2": 0.3861,
+      "score": 2972173729792.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 17.004,
+      "mae": 12.2223,
+      "r2": 0.8313,
+      "score": 906.57
+    },
+    "val_mean_engine_rmse": 13.6821,
+    "val_final_cycle_rmse": 4.516,
+    "training_time_sec": 16.56
+  },
+  "FD003_XGBoost_FlattenedWindow_Tier3_Extended24": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.9559,
+      "mae": 9.5559,
+      "r2": 0.8884,
+      "score": 19073.28
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.7818,
+      "mae": 35.9476,
+      "r2": 0.3895,
+      "score": 2985462071296.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 17.2482,
+      "mae": 12.8543,
+      "r2": 0.8264,
+      "score": 845.74
+    },
+    "val_mean_engine_rmse": 13.8032,
+    "val_final_cycle_rmse": 4.1776,
+    "training_time_sec": 18.1
+  },
+  "FD003_XGBoost_SummaryStats_Tier1_Core14": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.086,
+      "mae": 8.3321,
+      "r2": 0.9019,
+      "score": 14589.86
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.3726,
+      "mae": 34.7784,
+      "r2": 0.3969,
+      "score": 3136202997760.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.3495,
+      "mae": 10.6556,
+      "r2": 0.8798,
+      "score": 315.92
+    },
+    "val_mean_engine_rmse": 12.7128,
+    "val_final_cycle_rmse": 2.3632,
+    "training_time_sec": 2.95
+  },
+  "FD003_XGBoost_SummaryStats_Tier2_Operational17": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 85,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.1547,
+      "mae": 8.427,
+      "r2": 0.9009,
+      "score": 14987.94
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.4742,
+      "mae": 34.8985,
+      "r2": 0.3951,
+      "score": 3184678404096.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.633,
+      "mae": 10.9337,
+      "r2": 0.875,
+      "score": 325.09
+    },
+    "val_mean_engine_rmse": 12.8694,
+    "val_final_cycle_rmse": 2.7051,
+    "training_time_sec": 3.16
+  },
+  "FD003_XGBoost_SummaryStats_Tier3_Extended24": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 13.016,
+      "mae": 8.3796,
+      "r2": 0.9029,
+      "score": 14206.37
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.5676,
+      "mae": 34.8302,
+      "r2": 0.3934,
+      "score": 3733758410752.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.8789,
+      "mae": 11.0039,
+      "r2": 0.8708,
+      "score": 368.74
+    },
+    "val_mean_engine_rmse": 12.733,
+    "val_final_cycle_rmse": 2.5951,
+    "training_time_sec": 1.99
+  },
+  "FD003_XGBoost_Tuned_SummaryStats_Tier3_Extended24": {
+    "subset": "FD003",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 250,
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 5.0,
+      "early_stopping_rounds": 20,
+      "best_iteration": 119,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 12.7926,
+      "mae": 8.4488,
+      "r2": 0.9063,
+      "score": 13064.84
+    },
+    "val_uncapped_metrics": {
+      "rmse": 66.6451,
+      "mae": 34.9549,
+      "r2": 0.392,
+      "score": 3631902097408.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 14.2476,
+      "mae": 10.6958,
+      "r2": 0.8815,
+      "score": 312.21
+    },
+    "val_mean_engine_rmse": 12.6834,
+    "val_final_cycle_rmse": 4.6194,
+    "training_time_sec": 2.15
+  },
+  "FD004_XGBoost_FinalObservation_Tier1_Core14": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 14,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 17.2891,
+      "mae": 12.985,
+      "r2": 0.8243,
+      "score": 76422.05
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.5178,
+      "mae": 48.5614,
+      "r2": 0.2706,
+      "score": 121604841472.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.2513,
+      "mae": 23.363,
+      "r2": 0.6715,
+      "score": 9312.21
+    },
+    "val_mean_engine_rmse": 17.2016,
+    "val_final_cycle_rmse": 8.1765,
+    "training_time_sec": 1.88
+  },
+  "FD004_XGBoost_FinalObservation_Tier2_Operational17": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 17,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 17.2944,
+      "mae": 12.9854,
+      "r2": 0.8242,
+      "score": 76561.61
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.549,
+      "mae": 48.5591,
+      "r2": 0.27,
+      "score": 120508088320.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.5915,
+      "mae": 23.3503,
+      "r2": 0.6643,
+      "score": 10627.08
+    },
+    "val_mean_engine_rmse": 17.2042,
+    "val_final_cycle_rmse": 8.0734,
+    "training_time_sec": 2.08
+  },
+  "FD004_XGBoost_FinalObservation_Tier3_Extended24": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FinalObservation",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 24,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.4151,
+      "mae": 12.1572,
+      "r2": 0.8416,
+      "score": 67625.86
+    },
+    "val_uncapped_metrics": {
+      "rmse": 72.756,
+      "mae": 47.7296,
+      "r2": 0.2856,
+      "score": 134693781504.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 30.9258,
+      "mae": 22.8846,
+      "r2": 0.6783,
+      "score": 9482.26
+    },
+    "val_mean_engine_rmse": 16.3164,
+    "val_final_cycle_rmse": 8.6428,
+    "training_time_sec": 3.17
+  },
+  "FD004_XGBoost_FlattenedWindow_Tier1_Core14": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 420,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.3276,
+      "mae": 12.4665,
+      "r2": 0.8433,
+      "score": 63108.6
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.0496,
+      "mae": 48.0367,
+      "r2": 0.2798,
+      "score": 116058562560.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 30.4099,
+      "mae": 22.6484,
+      "r2": 0.6889,
+      "score": 8064.35
+    },
+    "val_mean_engine_rmse": 16.2935,
+    "val_final_cycle_rmse": 10.9382,
+    "training_time_sec": 29.4
+  },
+  "FD004_XGBoost_FlattenedWindow_Tier2_Operational17": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 510,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 16.2448,
+      "mae": 12.403,
+      "r2": 0.8449,
+      "score": 60812.08
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.0684,
+      "mae": 47.9755,
+      "r2": 0.2795,
+      "score": 120263983104.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 30.5734,
+      "mae": 23.0265,
+      "r2": 0.6856,
+      "score": 7883.25
+    },
+    "val_mean_engine_rmse": 16.184,
+    "val_final_cycle_rmse": 9.5593,
+    "training_time_sec": 18.27
+  },
+  "FD004_XGBoost_FlattenedWindow_Tier3_Extended24": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_FlattenedWindow",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 720,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 15.8682,
+      "mae": 12.0454,
+      "r2": 0.852,
+      "score": 57226.17
+    },
+    "val_uncapped_metrics": {
+      "rmse": 72.7223,
+      "mae": 47.6151,
+      "r2": 0.2863,
+      "score": 144597663744.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 29.7334,
+      "mae": 22.0147,
+      "r2": 0.7026,
+      "score": 6939.94
+    },
+    "val_mean_engine_rmse": 15.7873,
+    "val_final_cycle_rmse": 10.3656,
+    "training_time_sec": 13.38
+  },
+  "FD004_XGBoost_SummaryStats_Tier1_Core14": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier1_Core14",
+    "feature_dim": 70,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 18.2856,
+      "mae": 13.4793,
+      "r2": 0.8035,
+      "score": 91691.58
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.9359,
+      "mae": 49.0264,
+      "r2": 0.2623,
+      "score": 86506029056.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 32.2188,
+      "mae": 24.3415,
+      "r2": 0.6508,
+      "score": 16201.2
+    },
+    "val_mean_engine_rmse": 17.7596,
+    "val_final_cycle_rmse": 14.7825,
+    "training_time_sec": 1.29
+  },
+  "FD004_XGBoost_SummaryStats_Tier2_Operational17": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier2_Operational17",
+    "feature_dim": 85,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 18.2003,
+      "mae": 13.5003,
+      "r2": 0.8053,
+      "score": 87372.52
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.8298,
+      "mae": 49.0407,
+      "r2": 0.2644,
+      "score": 88643772416.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 32.0902,
+      "mae": 24.1583,
+      "r2": 0.6536,
+      "score": 12176.69
+    },
+    "val_mean_engine_rmse": 17.6971,
+    "val_final_cycle_rmse": 12.5561,
+    "training_time_sec": 3.23
+  },
+  "FD004_XGBoost_SummaryStats_Tier3_Extended24": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.0,
+      "reg_lambda": 1.0,
+      "early_stopping": false,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 18.1697,
+      "mae": 13.2592,
+      "r2": 0.806,
+      "score": 86116.09
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.6275,
+      "mae": 48.8036,
+      "r2": 0.2684,
+      "score": 105561481216.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.8285,
+      "mae": 24.011,
+      "r2": 0.6592,
+      "score": 11196.61
+    },
+    "val_mean_engine_rmse": 17.4986,
+    "val_final_cycle_rmse": 12.6063,
+    "training_time_sec": 4.95
+  },
+  "FD004_XGBoost_Tuned_SummaryStats_Tier3_Extended24": {
+    "subset": "FD004",
+    "model_family": "XGBoost",
+    "model_variant": "XGBoost_Tuned_SummaryStats",
+    "feature_tier": "Tier3_Extended24",
+    "feature_dim": 120,
+    "hyperparameters": {
+      "n_estimators": 250,
+      "max_depth": 4,
+      "learning_rate": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "reg_alpha": 0.1,
+      "reg_lambda": 5.0,
+      "early_stopping_rounds": 20,
+      "best_iteration": 127,
+      "random_state": 42
+    },
+    "val_capped_metrics": {
+      "rmse": 17.5246,
+      "mae": 13.3648,
+      "r2": 0.8195,
+      "score": 70732.61
+    },
+    "val_uncapped_metrics": {
+      "rmse": 73.7097,
+      "mae": 48.9432,
+      "r2": 0.2668,
+      "score": 126629175296.0
+    },
+    "test_uncapped_metrics": {
+      "rmse": 31.5881,
+      "mae": 23.9737,
+      "r2": 0.6644,
+      "score": 11571.11
+    },
+    "val_mean_engine_rmse": 16.9724,
+    "val_final_cycle_rmse": 16.1929,
+    "training_time_sec": 4.52
+  },
+  "_environment_metadata": {
+    "python_version": "3.15.0",
+    "python_build": "3.15.0 (main, Oct 14 2026, 01:12:50) [MSC v.1951 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scipy": "1.18.1",
+      "scikit-learn": "1.9.1",
+      "xgboost": "3.4.1",
+      "torch": "2.15.0+cpu",
+      "matplotlib": "3.11.2"
+    },
+    "recorded_for": "NASA C-MAPSS Phase 4 Roadmap Step 4.6 Compliance"
+  }
+}
