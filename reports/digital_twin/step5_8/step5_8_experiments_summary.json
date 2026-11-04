@@ -1,0 +1,109 @@
+{
+  "step": "Phase 5 Step 5.8: Baseline vs Altered Scenario Execution",
+  "dataset_subset": "FD001",
+  "engine_unit": 1,
+  "split": "train",
+  "total_trajectory_cycles": 192,
+  "experiment_A_thermal_stress": {
+    "summary_metrics": {
+      "experiment_name": "Thermal Stress (+35.0 \u00b0R on T30)",
+      "subset": "FD001",
+      "unit_number": 1,
+      "total_cycles_evaluated": 192,
+      "target_parameter": "T30",
+      "category": "thermal_stress",
+      "modification_value": 35.0,
+      "unit": "\u00b0R",
+      "delta_rul_xgb": {
+        "mean": -8.509673448900381,
+        "std": 4.183546514268466,
+        "min": -16.86798095703125,
+        "max": 1.9317398071289062,
+        "mean_abs_delta": 8.557953846951326
+      },
+      "delta_rul_lstm": {
+        "mean": -3.10992968082428,
+        "std": 3.2266555824716914,
+        "min": -16.27454376220703,
+        "max": 0.24509429931640625,
+        "mean_abs_delta": 3.1165037552515664
+      },
+      "delta_spread": {
+        "mean": 4.3638649980227155,
+        "std": 5.637513586332684,
+        "min": -12.102787017822266,
+        "max": 14.035751342773438
+      }
+    },
+    "fair_comparison_checks": {
+      "identical_initial_conditions": true,
+      "identical_cycle_count": true,
+      "identical_cycle_ids": true,
+      "all_requested_cycles_evaluated": true,
+      "unmodified_measured_telemetry": true,
+      "unmodified_macroscopic_indicators": true,
+      "baseline_scenario_fields_unset": true,
+      "altered_scenario_fields_populated": true,
+      "scenario_audit_verified": true,
+      "all_outputs_finite": true
+    },
+    "artifacts": {
+      "comparison_csv": "reports\\digital_twin\\step5_8\\thermal_stress_T30_plus35.csv",
+      "baseline_csv": "reports\\digital_twin\\step5_8\\baseline_thermal_stress_T30_plus35.csv",
+      "altered_csv": "reports\\digital_twin\\step5_8\\altered_thermal_stress_T30_plus35.csv",
+      "summary_json": "reports\\digital_twin\\step5_8\\thermal_stress_T30_plus35_summary.json",
+      "plot_png": "reports\\digital_twin\\step5_8\\thermal_stress_T30_plus35_plot.png"
+    }
+  },
+  "experiment_B_sensor_bias": {
+    "summary_metrics": {
+      "experiment_name": "Sensor Bias (+15.0 psia on P30)",
+      "subset": "FD001",
+      "unit_number": 1,
+      "total_cycles_evaluated": 192,
+      "target_parameter": "P30",
+      "category": "sensor_bias",
+      "modification_value": 15.0,
+      "unit": "psia",
+      "delta_rul_xgb": {
+        "mean": 1.9235997100671132,
+        "std": 1.1857106518742726,
+        "min": 0.0766448974609375,
+        "max": 6.0208740234375,
+        "mean_abs_delta": 1.9235997100671132
+      },
+      "delta_rul_lstm": {
+        "mean": 28.59089119359851,
+        "std": 24.79391766866349,
+        "min": 2.6944961547851562,
+        "max": 96.77442359924316,
+        "mean_abs_delta": 28.59089119359851
+      },
+      "delta_spread": {
+        "mean": 24.263782740881044,
+        "std": 23.804610778910366,
+        "min": -6.555290222167969,
+        "max": 93.7523422241211
+      }
+    },
+    "fair_comparison_checks": {
+      "identical_initial_conditions": true,
+      "identical_cycle_count": true,
+      "identical_cycle_ids": true,
+      "all_requested_cycles_evaluated": true,
+      "unmodified_measured_telemetry": true,
+      "unmodified_macroscopic_indicators": true,
+      "baseline_scenario_fields_unset": true,
+      "altered_scenario_fields_populated": true,
+      "scenario_audit_verified": true,
+      "all_outputs_finite": true
+    },
+    "artifacts": {
+      "comparison_csv": "reports\\digital_twin\\step5_8\\sensor_bias_P30_plus15.csv",
+      "baseline_csv": "reports\\digital_twin\\step5_8\\baseline_sensor_bias_P30_plus15.csv",
+      "altered_csv": "reports\\digital_twin\\step5_8\\altered_sensor_bias_P30_plus15.csv",
+      "summary_json": "reports\\digital_twin\\step5_8\\sensor_bias_P30_plus15_summary.json",
+      "plot_png": "reports\\digital_twin\\step5_8\\sensor_bias_P30_plus15_plot.png"
+    }
+  }
+}

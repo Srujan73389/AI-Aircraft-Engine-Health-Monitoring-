@@ -1,0 +1,680 @@
+{
+  "step": "Phase 5 Step 5.10: Validate Numerical Stability, Repeatability, and Edge Robustness",
+  "long_trajectory_stability": {
+    "FD004_Unit1": {
+      "subset": "FD004",
+      "unit_number": 1,
+      "total_cycles": 320,
+      "fifo_buffer_shape_invariant": true,
+      "expected_fifo_shape": [
+        30,
+        24
+      ],
+      "all_states_finite": true,
+      "max_memory_growth_bytes": 0,
+      "numerical_drift_max": 0.0,
+      "is_stable": true
+    },
+    "FD001_Unit69": {
+      "subset": "FD001",
+      "unit_number": 69,
+      "total_cycles": 361,
+      "fifo_buffer_shape_invariant": true,
+      "expected_fifo_shape": [
+        30,
+        14
+      ],
+      "all_states_finite": true,
+      "max_memory_growth_bytes": 0,
+      "numerical_drift_max": 0.0,
+      "is_stable": true
+    }
+  },
+  "physical_range_validation": {
+    "FD001": {
+      "unit_number": 1,
+      "cycles_checked": 192,
+      "is_overall_valid": true,
+      "checks": [
+        {
+          "variable_name": "T2",
+          "min_bound": 400.0,
+          "max_bound": 600.0,
+          "observed_min": 518.67,
+          "observed_max": 518.67,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total temperature"
+        },
+        {
+          "variable_name": "T24",
+          "min_bound": 450.0,
+          "max_bound": 750.0,
+          "observed_min": 641.71,
+          "observed_max": 644.21,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPC exit total temperature"
+        },
+        {
+          "variable_name": "T30",
+          "min_bound": 1100.0,
+          "max_bound": 1850.0,
+          "observed_min": 1577.6,
+          "observed_max": 1605.44,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total temperature"
+        },
+        {
+          "variable_name": "T50",
+          "min_bound": 1000.0,
+          "max_bound": 1600.0,
+          "observed_min": 1393.58,
+          "observed_max": 1432.52,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPT exit total temperature"
+        },
+        {
+          "variable_name": "P2",
+          "min_bound": 2.5,
+          "max_bound": 20.0,
+          "observed_min": 14.62,
+          "observed_max": 14.62,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P15",
+          "min_bound": 5.0,
+          "max_bound": 30.0,
+          "observed_min": 21.61,
+          "observed_max": 21.61,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Bypass duct total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P30",
+          "min_bound": 100.0,
+          "max_bound": 700.0,
+          "observed_min": 550.7,
+          "observed_max": 554.96,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Ps30",
+          "min_bound": 5.0,
+          "max_bound": 65.0,
+          "observed_min": 47.03,
+          "observed_max": 48.33,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit static pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Nf",
+          "min_bound": 1500.0,
+          "max_bound": 3000.0,
+          "observed_min": 2388.0,
+          "observed_max": 2388.32,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical fan speed (strictly > 0)"
+        },
+        {
+          "variable_name": "Nc",
+          "min_bound": 7000.0,
+          "max_bound": 10500.0,
+          "observed_min": 9033.22,
+          "observed_max": 9061.21,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical core speed (strictly > 0)"
+        },
+        {
+          "variable_name": "hpc_temp_rise",
+          "min_bound": 500.0,
+          "max_bound": 1250.0,
+          "observed_min": 934.7399999999999,
+          "observed_max": 961.9499999999999,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC temperature rise T30 - T24 (\u00b0R)"
+        },
+        {
+          "variable_name": "overall_pressure_ratio",
+          "min_bound": 15.0,
+          "max_bound": 55.0,
+          "observed_min": 37.66757865937073,
+          "observed_max": 37.958960328317374,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Overall pressure ratio P30 / P2"
+        },
+        {
+          "variable_name": "spool_speed_ratio",
+          "min_bound": 3.0,
+          "max_bound": 5.5,
+          "observed_min": 3.78224860990152,
+          "observed_max": 3.794412991407179,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Spool speed ratio Nc / Nf"
+        }
+      ]
+    },
+    "FD002": {
+      "unit_number": 1,
+      "cycles_checked": 149,
+      "is_overall_valid": true,
+      "checks": [
+        {
+          "variable_name": "T2",
+          "min_bound": 400.0,
+          "max_bound": 600.0,
+          "observed_min": 445.0,
+          "observed_max": 518.67,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total temperature"
+        },
+        {
+          "variable_name": "T24",
+          "min_bound": 450.0,
+          "max_bound": 750.0,
+          "observed_min": 536.25,
+          "observed_max": 643.73,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPC exit total temperature"
+        },
+        {
+          "variable_name": "T30",
+          "min_bound": 1100.0,
+          "max_bound": 1850.0,
+          "observed_min": 1256.76,
+          "observed_max": 1607.03,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total temperature"
+        },
+        {
+          "variable_name": "T50",
+          "min_bound": 1000.0,
+          "max_bound": 1600.0,
+          "observed_min": 1040.99,
+          "observed_max": 1429.43,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPT exit total temperature"
+        },
+        {
+          "variable_name": "P2",
+          "min_bound": 2.5,
+          "max_bound": 20.0,
+          "observed_min": 3.91,
+          "observed_max": 14.62,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P15",
+          "min_bound": 5.0,
+          "max_bound": 30.0,
+          "observed_min": 5.71,
+          "observed_max": 21.61,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Bypass duct total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P30",
+          "min_bound": 100.0,
+          "max_bound": 700.0,
+          "observed_min": 137.57,
+          "observed_max": 554.08,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Ps30",
+          "min_bound": 5.0,
+          "max_bound": 65.0,
+          "observed_min": 36.57,
+          "observed_max": 48.09,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit static pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Nf",
+          "min_bound": 1500.0,
+          "max_bound": 3000.0,
+          "observed_min": 1915.02,
+          "observed_max": 2388.31,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical fan speed (strictly > 0)"
+        },
+        {
+          "variable_name": "Nc",
+          "min_bound": 7000.0,
+          "max_bound": 10500.0,
+          "observed_min": 7993.23,
+          "observed_max": 9051.13,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical core speed (strictly > 0)"
+        },
+        {
+          "variable_name": "hpc_temp_rise",
+          "min_bound": 500.0,
+          "max_bound": 1250.0,
+          "observed_min": 719.45,
+          "observed_max": 963.9599999999999,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC temperature rise T30 - T24 (\u00b0R)"
+        },
+        {
+          "variable_name": "overall_pressure_ratio",
+          "min_bound": 15.0,
+          "max_bound": 55.0,
+          "observed_min": 24.768794326241135,
+          "observed_max": 37.89876880984953,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Overall pressure ratio P30 / P2"
+        },
+        {
+          "variable_name": "spool_speed_ratio",
+          "min_bound": 3.0,
+          "max_bound": 5.5,
+          "observed_min": 3.7454914734953295,
+          "observed_max": 4.180322904047788,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Spool speed ratio Nc / Nf"
+        }
+      ]
+    },
+    "FD003": {
+      "unit_number": 1,
+      "cycles_checked": 259,
+      "is_overall_valid": true,
+      "checks": [
+        {
+          "variable_name": "T2",
+          "min_bound": 400.0,
+          "max_bound": 600.0,
+          "observed_min": 518.67,
+          "observed_max": 518.67,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total temperature"
+        },
+        {
+          "variable_name": "T24",
+          "min_bound": 450.0,
+          "max_bound": 750.0,
+          "observed_min": 641.46,
+          "observed_max": 644.02,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPC exit total temperature"
+        },
+        {
+          "variable_name": "T30",
+          "min_bound": 1100.0,
+          "max_bound": 1850.0,
+          "observed_min": 1577.32,
+          "observed_max": 1606.8,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total temperature"
+        },
+        {
+          "variable_name": "T50",
+          "min_bound": 1000.0,
+          "max_bound": 1600.0,
+          "observed_min": 1388.13,
+          "observed_max": 1434.33,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPT exit total temperature"
+        },
+        {
+          "variable_name": "P2",
+          "min_bound": 2.5,
+          "max_bound": 20.0,
+          "observed_min": 14.62,
+          "observed_max": 14.62,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P15",
+          "min_bound": 5.0,
+          "max_bound": 30.0,
+          "observed_min": 21.6,
+          "observed_max": 21.61,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Bypass duct total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P30",
+          "min_bound": 100.0,
+          "max_bound": 700.0,
+          "observed_min": 551.25,
+          "observed_max": 555.48,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Ps30",
+          "min_bound": 5.0,
+          "max_bound": 65.0,
+          "observed_min": 47.0,
+          "observed_max": 48.34,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit static pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Nf",
+          "min_bound": 1500.0,
+          "max_bound": 3000.0,
+          "observed_min": 2387.95,
+          "observed_max": 2388.28,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical fan speed (strictly > 0)"
+        },
+        {
+          "variable_name": "Nc",
+          "min_bound": 7000.0,
+          "max_bound": 10500.0,
+          "observed_min": 9055.81,
+          "observed_max": 9084.89,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical core speed (strictly > 0)"
+        },
+        {
+          "variable_name": "hpc_temp_rise",
+          "min_bound": 500.0,
+          "max_bound": 1250.0,
+          "observed_min": 934.52,
+          "observed_max": 963.14,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC temperature rise T30 - T24 (\u00b0R)"
+        },
+        {
+          "variable_name": "overall_pressure_ratio",
+          "min_bound": 15.0,
+          "max_bound": 55.0,
+          "observed_min": 37.705198358413135,
+          "observed_max": 37.99452804377565,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Overall pressure ratio P30 / P2"
+        },
+        {
+          "variable_name": "spool_speed_ratio",
+          "min_bound": 3.0,
+          "max_bound": 5.5,
+          "observed_min": 3.79223112324591,
+          "observed_max": 3.803946773410152,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Spool speed ratio Nc / Nf"
+        }
+      ]
+    },
+    "FD004": {
+      "unit_number": 1,
+      "cycles_checked": 321,
+      "is_overall_valid": true,
+      "checks": [
+        {
+          "variable_name": "T2",
+          "min_bound": 400.0,
+          "max_bound": 600.0,
+          "observed_min": 445.0,
+          "observed_max": 518.67,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total temperature"
+        },
+        {
+          "variable_name": "T24",
+          "min_bound": 450.0,
+          "max_bound": 750.0,
+          "observed_min": 535.85,
+          "observed_max": 643.5,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPC exit total temperature"
+        },
+        {
+          "variable_name": "T30",
+          "min_bound": 1100.0,
+          "max_bound": 1850.0,
+          "observed_min": 1247.37,
+          "observed_max": 1603.28,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total temperature"
+        },
+        {
+          "variable_name": "T50",
+          "min_bound": 1000.0,
+          "max_bound": 1600.0,
+          "observed_min": 1028.79,
+          "observed_max": 1422.53,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "LPT exit total temperature"
+        },
+        {
+          "variable_name": "P2",
+          "min_bound": 2.5,
+          "max_bound": 20.0,
+          "observed_min": 3.91,
+          "observed_max": 14.62,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Fan inlet total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P15",
+          "min_bound": 5.0,
+          "max_bound": 30.0,
+          "observed_min": 5.69,
+          "observed_max": 21.59,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Bypass duct total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "P30",
+          "min_bound": 100.0,
+          "max_bound": 700.0,
+          "observed_min": 136.97,
+          "observed_max": 567.07,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit total pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Ps30",
+          "min_bound": 5.0,
+          "max_bound": 65.0,
+          "observed_min": 36.24,
+          "observed_max": 47.98,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC exit static pressure (strictly > 0)"
+        },
+        {
+          "variable_name": "Nf",
+          "min_bound": 1500.0,
+          "max_bound": 3000.0,
+          "observed_min": 1915.19,
+          "observed_max": 2388.5,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical fan speed (strictly > 0)"
+        },
+        {
+          "variable_name": "Nc",
+          "min_bound": 7000.0,
+          "max_bound": 10500.0,
+          "observed_min": 7994.03,
+          "observed_max": 9114.84,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Physical core speed (strictly > 0)"
+        },
+        {
+          "variable_name": "hpc_temp_rise",
+          "min_bound": 500.0,
+          "max_bound": 1250.0,
+          "observed_min": 710.4299999999998,
+          "observed_max": 960.11,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "HPC temperature rise T30 - T24 (\u00b0R)"
+        },
+        {
+          "variable_name": "overall_pressure_ratio",
+          "min_bound": 15.0,
+          "max_bound": 55.0,
+          "observed_min": 24.71489361702128,
+          "observed_max": 38.78727770177839,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Overall pressure ratio P30 / P2"
+        },
+        {
+          "variable_name": "spool_speed_ratio",
+          "min_bound": 3.0,
+          "max_bound": 5.5,
+          "observed_min": 3.7449541679218488,
+          "observed_max": 4.192794354080973,
+          "violations_count": 0,
+          "is_valid": true,
+          "description": "Spool speed ratio Nc / Nf"
+        }
+      ]
+    }
+  },
+  "deterministic_repeatability": {
+    "FD001": {
+      "subset": "FD001",
+      "unit_number": 1,
+      "cycles_compared": 192,
+      "is_scenario": false,
+      "scenario_id": null,
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    },
+    "FD002": {
+      "subset": "FD002",
+      "unit_number": 1,
+      "cycles_compared": 149,
+      "is_scenario": false,
+      "scenario_id": null,
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    },
+    "FD003": {
+      "subset": "FD003",
+      "unit_number": 1,
+      "cycles_compared": 259,
+      "is_scenario": false,
+      "scenario_id": null,
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    },
+    "FD004": {
+      "subset": "FD004",
+      "unit_number": 1,
+      "cycles_compared": 321,
+      "is_scenario": false,
+      "scenario_id": null,
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    }
+  },
+  "scenario_repeatability": {
+    "FD001_ThermalStress": {
+      "subset": "FD001",
+      "unit_number": 1,
+      "cycles_compared": 192,
+      "is_scenario": true,
+      "scenario_id": "SCENARIO_THERMAL_FD001",
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    },
+    "FD002_SensorBias": {
+      "subset": "FD002",
+      "unit_number": 1,
+      "cycles_compared": 149,
+      "is_scenario": true,
+      "scenario_id": "SCENARIO_BIAS_FD002",
+      "max_diff_g1_g29": 0.0,
+      "max_diff_g30": 0.0,
+      "max_diff_g31": 0.0,
+      "max_diff_g35_xgb": 0.0,
+      "max_diff_g36_lstm": 0.0,
+      "exact_match": true
+    }
+  },
+  "edge_case_resilience": {
+    "nan_rejection_passed": true,
+    "inf_rejection_passed": true,
+    "negative_pressure_rejection_passed": true,
+    "zero_speed_rejection_passed": true,
+    "non_monotonic_cycles_rejection_passed": true,
+    "all_passed": true,
+    "details": {
+      "nan_rejection": "Gracefully rejected: Edge-case violation: Non-finite value detected for sensor_3: nan",
+      "inf_rejection": "Gracefully rejected: Edge-case violation: Non-finite value detected for sensor_3: inf",
+      "negative_pressure_rejection": "Gracefully rejected: Edge-case violation: Unphysical non-positive pressure for sensor_5: -5.0 psia",
+      "zero_speed_rejection": "Gracefully rejected: Edge-case violation: Unphysical non-positive rotational speed for sensor_8: 0.0 rpm",
+      "non_monotonic_cycles_rejection": "Gracefully rejected: Edge-case violation: Non-monotonic or discontinuous cycle step at index 1: cycle 2 -> 2 (step = 0, expected 1)"
+    }
+  }
+}

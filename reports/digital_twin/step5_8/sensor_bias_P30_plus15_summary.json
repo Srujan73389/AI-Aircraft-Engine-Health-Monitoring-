@@ -1,0 +1,60 @@
+{
+  "summary_metrics": {
+    "experiment_name": "Sensor Bias (+15.0 psia on P30)",
+    "subset": "FD001",
+    "unit_number": 1,
+    "total_cycles_evaluated": 192,
+    "target_parameter": "P30",
+    "category": "sensor_bias",
+    "modification_value": 15.0,
+    "unit": "psia",
+    "delta_rul_xgb": {
+      "mean": 1.9235997100671132,
+      "std": 1.1857106518742726,
+      "min": 0.0766448974609375,
+      "max": 6.0208740234375,
+      "mean_abs_delta": 1.9235997100671132
+    },
+    "delta_rul_lstm": {
+      "mean": 28.59089119359851,
+      "std": 24.79391766866349,
+      "min": 2.6944961547851562,
+      "max": 96.77442359924316,
+      "mean_abs_delta": 28.59089119359851
+    },
+    "delta_spread": {
+      "mean": 24.263782740881044,
+      "std": 23.804610778910366,
+      "min": -6.555290222167969,
+      "max": 93.7523422241211
+    }
+  },
+  "fair_comparison_checks": {
+    "identical_initial_conditions": true,
+    "identical_cycle_count": true,
+    "identical_cycle_ids": true,
+    "all_requested_cycles_evaluated": true,
+    "unmodified_measured_telemetry": true,
+    "unmodified_macroscopic_indicators": true,
+    "baseline_scenario_fields_unset": true,
+    "altered_scenario_fields_populated": true,
+    "scenario_audit_verified": true,
+    "all_outputs_finite": true
+  },
+  "scenario_config": {
+    "scenario_id": "SCEN_EXP_B_SB_P30",
+    "category": "sensor_bias",
+    "name": "Sensor Bias (+15.0 psia on P30)",
+    "target_parameter": "P30",
+    "modification_value": 15.0,
+    "unit": "psia",
+    "validation_range": [
+      -50.0,
+      100.0
+    ],
+    "description": "Hypothetical HPC exit total pressure transducer bias (+15.0 psia)",
+    "is_simulation_only": true,
+    "baseline_value": null,
+    "simulated_value": null
+  }
+}

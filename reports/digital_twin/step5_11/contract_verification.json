@@ -1,0 +1,54 @@
+{
+  "step": "Phase 5 Step 5.11: Digital Twin Assumptions, Taxonomy & Labeling Verification",
+  "taxonomy_contract": {
+    "total_variables": 40,
+    "measured_count": 26,
+    "derived_count": 7,
+    "predicted_count": 5,
+    "simulated_count": 2,
+    "all_attributes_present": true,
+    "missing_attributes": [],
+    "is_valid": true
+  },
+  "unperturbed_defaults_contract": {
+    "subset": "FD001",
+    "unit_number": 1,
+    "cycles_tested": 191,
+    "unobservable_and_simulated_none": true,
+    "g32_to_g34_none": true,
+    "g35_to_g36_none_when_ml_disabled": true,
+    "g37_to_g38_none_when_ml_disabled": true,
+    "g39_to_g40_none": true,
+    "scenario_audit_none": true,
+    "is_valid": true
+  },
+  "provenance_and_labeling_contract": {
+    "to_dict_keys_count": 42,
+    "provenance_metadata_present": true,
+    "provenance_keys": [
+      "subset",
+      "feature_tier",
+      "is_padded",
+      "padded_cycles_count",
+      "history_window_length",
+      "scenario_id"
+    ],
+    "labeled_dict_verified": true,
+    "measured_labeled_correctly": true,
+    "derived_labeled_correctly": true,
+    "predicted_labeled_correctly": true,
+    "simulated_labeled_correctly": true,
+    "is_valid": true
+  },
+  "scenario_perturbation_contract": {
+    "thermal_stress_g39_populated": true,
+    "thermal_stress_g40_none": true,
+    "thermal_stress_audit_present": true,
+    "sensor_bias_g40_populated": true,
+    "sensor_bias_g39_none": true,
+    "sensor_bias_audit_present": true,
+    "raw_telemetry_unmodified": true,
+    "is_valid": true
+  },
+  "all_contracts_verified": true
+}

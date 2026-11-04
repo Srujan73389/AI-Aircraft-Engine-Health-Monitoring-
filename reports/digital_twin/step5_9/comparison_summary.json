@@ -1,0 +1,244 @@
+{
+  "step": "Phase 5 Step 5.9: Compare Digital Twin Outputs with Recorded Data",
+  "subsets_evaluated": [
+    "FD001",
+    "FD002",
+    "FD003",
+    "FD004"
+  ],
+  "categories": {
+    "A_direct_telemetry": {
+      "FD001": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 192,
+        "variables_compared": 26,
+        "exact_matches": 4992,
+        "mismatches": 0,
+        "max_abs_diff": 0.0,
+        "all_exact_match": true
+      },
+      "FD002": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 149,
+        "variables_compared": 26,
+        "exact_matches": 3874,
+        "mismatches": 0,
+        "max_abs_diff": 0.0,
+        "all_exact_match": true
+      },
+      "FD003": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 259,
+        "variables_compared": 26,
+        "exact_matches": 6734,
+        "mismatches": 0,
+        "max_abs_diff": 0.0,
+        "all_exact_match": true
+      },
+      "FD004": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 321,
+        "variables_compared": 26,
+        "exact_matches": 8346,
+        "mismatches": 0,
+        "max_abs_diff": 0.0,
+        "all_exact_match": true
+      }
+    },
+    "B_derived_indicators": {
+      "FD001": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 192,
+        "max_abs_diff_g27": 0.0,
+        "max_abs_diff_g28": 0.0,
+        "max_abs_diff_g29": 0.0,
+        "exact_matches_g27": 192,
+        "exact_matches_g28": 192,
+        "exact_matches_g29": 192,
+        "all_finite": true
+      },
+      "FD002": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 149,
+        "max_abs_diff_g27": 0.0,
+        "max_abs_diff_g28": 0.0,
+        "max_abs_diff_g29": 0.0,
+        "exact_matches_g27": 149,
+        "exact_matches_g28": 149,
+        "exact_matches_g29": 149,
+        "all_finite": true
+      },
+      "FD003": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 259,
+        "max_abs_diff_g27": 0.0,
+        "max_abs_diff_g28": 0.0,
+        "max_abs_diff_g29": 0.0,
+        "exact_matches_g27": 259,
+        "exact_matches_g28": 259,
+        "exact_matches_g29": 259,
+        "all_finite": true
+      },
+      "FD004": {
+        "unit_number": 1,
+        "split": "train",
+        "records_compared": 321,
+        "max_abs_diff_g27": 0.0,
+        "max_abs_diff_g28": 0.0,
+        "max_abs_diff_g29": 0.0,
+        "exact_matches_g27": 321,
+        "exact_matches_g28": 321,
+        "exact_matches_g29": 321,
+        "all_finite": true
+      }
+    },
+    "C_preprocessing_and_sequences": {
+      "FD001": {
+        "unit_number": 1,
+        "split": "train",
+        "g30_records_compared": 192,
+        "g30_features_per_record": 14,
+        "g30_max_abs_diff": 0.0,
+        "g31_records_compared": 163,
+        "g31_max_abs_diff": 2.9691964442690733e-08,
+        "excluded_padded_cycles": 29,
+        "exclusion_reason": "Cycles 1..29 utilize left-edge replication padding in Digital Twin; Phase 3 sequence arrays do not contain rows for t < 30."
+      },
+      "FD002": {
+        "unit_number": 1,
+        "split": "train",
+        "g30_records_compared": 149,
+        "g30_features_per_record": 24,
+        "g30_max_abs_diff": 0.0,
+        "g31_records_compared": 120,
+        "g31_max_abs_diff": 2.9748206564761404e-08,
+        "excluded_padded_cycles": 29,
+        "exclusion_reason": "Cycles 1..29 utilize left-edge replication padding in Digital Twin; Phase 3 sequence arrays do not contain rows for t < 30."
+      },
+      "FD003": {
+        "unit_number": 1,
+        "split": "train",
+        "g30_records_compared": 259,
+        "g30_features_per_record": 24,
+        "g30_max_abs_diff": 0.0,
+        "g31_records_compared": 230,
+        "g31_max_abs_diff": 2.973251866933424e-08,
+        "excluded_padded_cycles": 29,
+        "exclusion_reason": "Cycles 1..29 utilize left-edge replication padding in Digital Twin; Phase 3 sequence arrays do not contain rows for t < 30."
+      },
+      "FD004": {
+        "unit_number": 1,
+        "split": "train",
+        "g30_records_compared": 321,
+        "g30_features_per_record": 24,
+        "g30_max_abs_diff": 0.0,
+        "g31_records_compared": 292,
+        "g31_max_abs_diff": 2.9785899080536637e-08,
+        "excluded_padded_cycles": 29,
+        "exclusion_reason": "Cycles 1..29 utilize left-edge replication padding in Digital Twin; Phase 3 sequence arrays do not contain rows for t < 30."
+      }
+    },
+    "D_ml_prognostics": {
+      "FD001": {
+        "unit_number": 2,
+        "partition": "validation",
+        "records_compared": 258,
+        "xgb_mae_capped": 5.008988548618879,
+        "xgb_rmse_capped": 6.4508132724255285,
+        "xgb_max_err_capped": 16.807083129882812,
+        "lstm_mae_capped": 5.568852839543838,
+        "lstm_rmse_capped": 7.772270311461746,
+        "lstm_max_err_capped": 21.4117431640625,
+        "xgb_mae_uncapped": 38.30796559466872,
+        "xgb_rmse_uncapped": 55.88817552071606,
+        "xgb_max_err_uncapped": 136.4731674194336,
+        "lstm_mae_uncapped": 38.968591417453084,
+        "lstm_rmse_uncapped": 55.192045480627385,
+        "lstm_max_err_uncapped": 130.0550079345703,
+        "xgb_mae_vs_phase4_recorded": 0.019384040906448078,
+        "lstm_mae_vs_phase4_recorded": 0.0023487540178518456,
+        "max_diff_vs_phase4_xgb": 1.576553649902337,
+        "max_diff_vs_phase4_lstm": 0.004992065429689774
+      },
+      "FD002": {
+        "unit_number": 2,
+        "partition": "validation",
+        "records_compared": 240,
+        "xgb_mae_capped": 23.37398946682612,
+        "xgb_rmse_capped": 26.856678666086708,
+        "xgb_max_err_capped": 53.519935607910156,
+        "lstm_mae_capped": 17.821979163090386,
+        "lstm_rmse_capped": 21.222746668566568,
+        "lstm_max_err_capped": 47.6507453918457,
+        "xgb_mae_uncapped": 50.686489466826124,
+        "xgb_rmse_uncapped": 65.26317743856167,
+        "xgb_max_err_uncapped": 149.22122955322266,
+        "lstm_mae_uncapped": 45.13447916309039,
+        "lstm_rmse_uncapped": 60.37244499976496,
+        "lstm_max_err_uncapped": 127.71945190429688,
+        "xgb_mae_vs_phase4_recorded": 0.0024065190951027696,
+        "lstm_mae_vs_phase4_recorded": 0.002725960175196507,
+        "max_diff_vs_phase4_xgb": 0.004983215332032387,
+        "max_diff_vs_phase4_lstm": 0.004983062744138067
+      },
+      "FD003": {
+        "unit_number": 2,
+        "partition": "validation",
+        "records_compared": 224,
+        "xgb_mae_capped": 6.590888672641346,
+        "xgb_rmse_capped": 9.857677910789127,
+        "xgb_max_err_capped": 30.619056701660156,
+        "lstm_mae_capped": 8.362508699297905,
+        "lstm_rmse_capped": 13.827021592178598,
+        "lstm_max_err_capped": 41.48211669921875,
+        "xgb_mae_uncapped": 28.244249039462634,
+        "xgb_rmse_uncapped": 39.82861219699668,
+        "xgb_max_err_uncapped": 97.91911315917969,
+        "lstm_mae_uncapped": 29.54394803089755,
+        "lstm_rmse_uncapped": 39.95421937260982,
+        "lstm_max_err_uncapped": 95.49998474121094,
+        "xgb_mae_vs_phase4_recorded": 0.007390004140990221,
+        "lstm_mae_vs_phase4_recorded": 0.002665099161012045,
+        "max_diff_vs_phase4_xgb": 0.855156936645507,
+        "max_diff_vs_phase4_lstm": 0.004984283447264204
+      },
+      "FD004": {
+        "unit_number": 2,
+        "partition": "validation",
+        "records_compared": 270,
+        "xgb_mae_capped": 8.44123226635986,
+        "xgb_rmse_capped": 10.63987839866762,
+        "xgb_max_err_capped": 28.93603515625,
+        "lstm_mae_capped": 6.865814374994349,
+        "lstm_rmse_capped": 8.836996753932045,
+        "lstm_max_err_capped": 24.918167114257812,
+        "xgb_mae_uncapped": 47.107898933026526,
+        "xgb_rmse_uncapped": 65.04968339621736,
+        "xgb_max_err_uncapped": 154.44056701660156,
+        "lstm_mae_uncapped": 45.532481041661015,
+        "lstm_rmse_uncapped": 64.66831336677552,
+        "lstm_max_err_uncapped": 148.16947174072266,
+        "xgb_mae_vs_phase4_recorded": 0.0024572480828675422,
+        "lstm_mae_vs_phase4_recorded": 0.002539932816116735,
+        "max_diff_vs_phase4_xgb": 0.0049923706054642025,
+        "max_diff_vs_phase4_lstm": 0.004993896484378979
+      }
+    },
+    "E_unobservable_variables": {
+      "G32_isolation_forest_anomaly_score": "Model-derived unsupervised anomaly score; no physical ground truth.",
+      "G33_pca_spe_residual_energy": "Model-derived PCA squared prediction error; no physical ground truth.",
+      "G34_persistence_alert_flag": "Model-derived multi-cycle alert persistence flag; no physical ground truth.",
+      "G37_prognostic_spread": "Derived inter-model prognostic spread |G35 - G36|; epistemic uncertainty metric.",
+      "G38_virtual_health_index": "Proposed continuous health index H_index(t); unobservable in C-MAPSS telemetry.",
+      "G39_thermal_stress_offset": "Analytical simulation-only what-if parameter (delta T); not a recorded measurement.",
+      "G40_sensor_bias_delta": "Analytical simulation-only what-if parameter (delta sensor); not a recorded measurement."
+    }
+  }
+}

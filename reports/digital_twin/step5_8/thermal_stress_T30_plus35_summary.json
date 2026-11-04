@@ -1,0 +1,60 @@
+{
+  "summary_metrics": {
+    "experiment_name": "Thermal Stress (+35.0 \u00b0R on T30)",
+    "subset": "FD001",
+    "unit_number": 1,
+    "total_cycles_evaluated": 192,
+    "target_parameter": "T30",
+    "category": "thermal_stress",
+    "modification_value": 35.0,
+    "unit": "\u00b0R",
+    "delta_rul_xgb": {
+      "mean": -8.509673448900381,
+      "std": 4.183546514268466,
+      "min": -16.86798095703125,
+      "max": 1.9317398071289062,
+      "mean_abs_delta": 8.557953846951326
+    },
+    "delta_rul_lstm": {
+      "mean": -3.10992968082428,
+      "std": 3.2266555824716914,
+      "min": -16.27454376220703,
+      "max": 0.24509429931640625,
+      "mean_abs_delta": 3.1165037552515664
+    },
+    "delta_spread": {
+      "mean": 4.3638649980227155,
+      "std": 5.637513586332684,
+      "min": -12.102787017822266,
+      "max": 14.035751342773438
+    }
+  },
+  "fair_comparison_checks": {
+    "identical_initial_conditions": true,
+    "identical_cycle_count": true,
+    "identical_cycle_ids": true,
+    "all_requested_cycles_evaluated": true,
+    "unmodified_measured_telemetry": true,
+    "unmodified_macroscopic_indicators": true,
+    "baseline_scenario_fields_unset": true,
+    "altered_scenario_fields_populated": true,
+    "scenario_audit_verified": true,
+    "all_outputs_finite": true
+  },
+  "scenario_config": {
+    "scenario_id": "SCEN_EXP_A_TS_T30",
+    "category": "thermal_stress",
+    "name": "Thermal Stress (+35.0 \u00b0R on T30)",
+    "target_parameter": "T30",
+    "modification_value": 35.0,
+    "unit": "\u00b0R",
+    "validation_range": [
+      -100.0,
+      200.0
+    ],
+    "description": "Hypothetical elevated HPC exit temperature excursion (+35.0 \u00b0R)",
+    "is_simulation_only": true,
+    "baseline_value": null,
+    "simulated_value": null
+  }
+}
