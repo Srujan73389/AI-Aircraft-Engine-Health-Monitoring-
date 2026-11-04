@@ -1,0 +1,280 @@
+{
+  "window_size": 30,
+  "stride": 1,
+  "feature_tier": "tier3_extended",
+  "number_of_features": 24,
+  "feature_columns": [
+    "op_setting_1",
+    "op_setting_2",
+    "op_setting_3",
+    "sensor_1",
+    "sensor_2",
+    "sensor_3",
+    "sensor_4",
+    "sensor_5",
+    "sensor_6",
+    "sensor_7",
+    "sensor_8",
+    "sensor_9",
+    "sensor_10",
+    "sensor_11",
+    "sensor_12",
+    "sensor_13",
+    "sensor_14",
+    "sensor_15",
+    "sensor_16",
+    "sensor_17",
+    "sensor_18",
+    "sensor_19",
+    "sensor_20",
+    "sensor_21"
+  ],
+  "target_definition": "RUL at final observed cycle of sliding window",
+  "short_engine_strategy": "Left-edge padding (repeating initial observation t=1 backwards)",
+  "subsets": {
+    "FD001": {
+      "train": {
+        "num_engines": 80,
+        "num_windows": 14020,
+        "X_shape": [
+          14020,
+          30,
+          24
+        ],
+        "y_shape": [
+          14020
+        ],
+        "X_file": "X_train_FD001.npy",
+        "y_file": "y_train_FD001.npy",
+        "metadata_file": "train_metadata_FD001.csv"
+      },
+      "validation": {
+        "num_engines": 20,
+        "num_windows": 3711,
+        "X_shape": [
+          3711,
+          30,
+          24
+        ],
+        "y_shape": [
+          3711
+        ],
+        "X_file": "X_validation_FD001.npy",
+        "y_file": "y_validation_FD001.npy",
+        "metadata_file": "validation_metadata_FD001.csv"
+      },
+      "test": {
+        "num_engines": 100,
+        "num_windows": 10196,
+        "X_shape": [
+          10196,
+          30,
+          24
+        ],
+        "y_shape": [
+          10196
+        ],
+        "X_file": "X_test_FD001.npy",
+        "y_file": "y_test_FD001.npy",
+        "metadata_file": "test_metadata_FD001.csv"
+      },
+      "test_final": {
+        "num_engines": 100,
+        "X_final_shape": [
+          100,
+          30,
+          24
+        ],
+        "y_final_shape": [
+          100
+        ],
+        "X_final_file": "X_test_final_FD001.npy",
+        "y_final_file": "y_test_final_FD001.npy",
+        "final_metadata_file": "test_final_metadata_FD001.csv"
+      }
+    },
+    "FD002": {
+      "train": {
+        "num_engines": 208,
+        "num_windows": 36857,
+        "X_shape": [
+          36857,
+          30,
+          24
+        ],
+        "y_shape": [
+          36857
+        ],
+        "X_file": "X_train_FD002.npy",
+        "y_file": "y_train_FD002.npy",
+        "metadata_file": "train_metadata_FD002.csv"
+      },
+      "validation": {
+        "num_engines": 52,
+        "num_windows": 9362,
+        "X_shape": [
+          9362,
+          30,
+          24
+        ],
+        "y_shape": [
+          9362
+        ],
+        "X_file": "X_validation_FD002.npy",
+        "y_file": "y_validation_FD002.npy",
+        "metadata_file": "validation_metadata_FD002.csv"
+      },
+      "test": {
+        "num_engines": 259,
+        "num_windows": 26511,
+        "X_shape": [
+          26511,
+          30,
+          24
+        ],
+        "y_shape": [
+          26511
+        ],
+        "X_file": "X_test_FD002.npy",
+        "y_file": "y_test_FD002.npy",
+        "metadata_file": "test_metadata_FD002.csv"
+      },
+      "test_final": {
+        "num_engines": 259,
+        "X_final_shape": [
+          259,
+          30,
+          24
+        ],
+        "y_final_shape": [
+          259
+        ],
+        "X_final_file": "X_test_final_FD002.npy",
+        "y_final_file": "y_test_final_FD002.npy",
+        "final_metadata_file": "test_final_metadata_FD002.csv"
+      }
+    },
+    "FD003": {
+      "train": {
+        "num_engines": 80,
+        "num_windows": 17857,
+        "X_shape": [
+          17857,
+          30,
+          24
+        ],
+        "y_shape": [
+          17857
+        ],
+        "X_file": "X_train_FD003.npy",
+        "y_file": "y_train_FD003.npy",
+        "metadata_file": "train_metadata_FD003.csv"
+      },
+      "validation": {
+        "num_engines": 20,
+        "num_windows": 3963,
+        "X_shape": [
+          3963,
+          30,
+          24
+        ],
+        "y_shape": [
+          3963
+        ],
+        "X_file": "X_validation_FD003.npy",
+        "y_file": "y_validation_FD003.npy",
+        "metadata_file": "validation_metadata_FD003.csv"
+      },
+      "test": {
+        "num_engines": 100,
+        "num_windows": 13696,
+        "X_shape": [
+          13696,
+          30,
+          24
+        ],
+        "y_shape": [
+          13696
+        ],
+        "X_file": "X_test_FD003.npy",
+        "y_file": "y_test_FD003.npy",
+        "metadata_file": "test_metadata_FD003.csv"
+      },
+      "test_final": {
+        "num_engines": 100,
+        "X_final_shape": [
+          100,
+          30,
+          24
+        ],
+        "y_final_shape": [
+          100
+        ],
+        "X_final_file": "X_test_final_FD003.npy",
+        "y_final_file": "y_test_final_FD003.npy",
+        "final_metadata_file": "test_final_metadata_FD003.csv"
+      }
+    },
+    "FD004": {
+      "train": {
+        "num_engines": 199,
+        "num_windows": 42725,
+        "X_shape": [
+          42725,
+          30,
+          24
+        ],
+        "y_shape": [
+          42725
+        ],
+        "X_file": "X_train_FD004.npy",
+        "y_file": "y_train_FD004.npy",
+        "metadata_file": "train_metadata_FD004.csv"
+      },
+      "validation": {
+        "num_engines": 50,
+        "num_windows": 11303,
+        "X_shape": [
+          11303,
+          30,
+          24
+        ],
+        "y_shape": [
+          11303
+        ],
+        "X_file": "X_validation_FD004.npy",
+        "y_file": "y_validation_FD004.npy",
+        "metadata_file": "validation_metadata_FD004.csv"
+      },
+      "test": {
+        "num_engines": 248,
+        "num_windows": 34092,
+        "X_shape": [
+          34092,
+          30,
+          24
+        ],
+        "y_shape": [
+          34092
+        ],
+        "X_file": "X_test_FD004.npy",
+        "y_file": "y_test_FD004.npy",
+        "metadata_file": "test_metadata_FD004.csv"
+      },
+      "test_final": {
+        "num_engines": 248,
+        "X_final_shape": [
+          248,
+          30,
+          24
+        ],
+        "y_final_shape": [
+          248
+        ],
+        "X_final_file": "X_test_final_FD004.npy",
+        "y_final_file": "y_test_final_FD004.npy",
+        "final_metadata_file": "test_final_metadata_FD004.csv"
+      }
+    }
+  }
+}

@@ -63,6 +63,19 @@ dataset/raw/C-MAPSS/*
 # Generated processed datasets (preserve folder structure via .gitkeep)
 dataset/processed/*
 !dataset/processed/.gitkeep
+!dataset/processed/train_val_split_manifest.json
+!dataset/processed/sequences/
+dataset/processed/sequences/*
+!dataset/processed/sequences/sequence_configuration.json
+
+# Phase 3 sequence arrays and binary model/scaler artifacts (must remain local)
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.joblib
+models/scalers/*.pkl
+!models/scalers/scaler_manifest.json
 
 # Redundant plot archives (individual plots are committed directly under reports/eda/)
 reports/eda/*.zip

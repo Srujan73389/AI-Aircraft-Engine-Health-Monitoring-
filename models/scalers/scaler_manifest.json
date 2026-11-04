@@ -1,0 +1,758 @@
+{
+  "FD001": {
+    "subset": "FD001",
+    "feature_tier": "tier3_extended",
+    "num_features_scaled": 24,
+    "ordered_feature_columns": [
+      "op_setting_1",
+      "op_setting_2",
+      "op_setting_3",
+      "sensor_1",
+      "sensor_2",
+      "sensor_3",
+      "sensor_4",
+      "sensor_5",
+      "sensor_6",
+      "sensor_7",
+      "sensor_8",
+      "sensor_9",
+      "sensor_10",
+      "sensor_11",
+      "sensor_12",
+      "sensor_13",
+      "sensor_14",
+      "sensor_15",
+      "sensor_16",
+      "sensor_17",
+      "sensor_18",
+      "sensor_19",
+      "sensor_20",
+      "sensor_21"
+    ],
+    "scaler_type": "SafeMinMaxScaler",
+    "feature_range": [
+      0.0,
+      1.0
+    ],
+    "training_partition_source": "train_FD001_split.csv",
+    "training_engines_count": 80,
+    "training_rows_count": 16340,
+    "validation_rows_count": 4291,
+    "test_rows_count": 13096,
+    "fitted_feature_parameters": {
+      "op_setting_1": {
+        "training_min": -0.0086,
+        "training_max": 0.0083,
+        "range": 0.0169,
+        "is_constant": false
+      },
+      "op_setting_2": {
+        "training_min": -0.0006,
+        "training_max": 0.0006,
+        "range": 0.0012,
+        "is_constant": false
+      },
+      "op_setting_3": {
+        "training_min": 100.0,
+        "training_max": 100.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_1": {
+        "training_min": 518.67,
+        "training_max": 518.67,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_2": {
+        "training_min": 641.25,
+        "training_max": 644.53,
+        "range": 3.28,
+        "is_constant": false
+      },
+      "sensor_3": {
+        "training_min": 1571.04,
+        "training_max": 1616.91,
+        "range": 45.87,
+        "is_constant": false
+      },
+      "sensor_4": {
+        "training_min": 1382.25,
+        "training_max": 1438.96,
+        "range": 56.71,
+        "is_constant": false
+      },
+      "sensor_5": {
+        "training_min": 14.62,
+        "training_max": 14.62,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_6": {
+        "training_min": 21.6,
+        "training_max": 21.61,
+        "range": 0.01,
+        "is_constant": false
+      },
+      "sensor_7": {
+        "training_min": 549.85,
+        "training_max": 556.06,
+        "range": 6.21,
+        "is_constant": false
+      },
+      "sensor_8": {
+        "training_min": 2387.9,
+        "training_max": 2388.56,
+        "range": 0.66,
+        "is_constant": false
+      },
+      "sensor_9": {
+        "training_min": 9021.73,
+        "training_max": 9244.59,
+        "range": 222.86,
+        "is_constant": false
+      },
+      "sensor_10": {
+        "training_min": 1.3,
+        "training_max": 1.3,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_11": {
+        "training_min": 46.85,
+        "training_max": 48.53,
+        "range": 1.68,
+        "is_constant": false
+      },
+      "sensor_12": {
+        "training_min": 518.69,
+        "training_max": 523.38,
+        "range": 4.69,
+        "is_constant": false
+      },
+      "sensor_13": {
+        "training_min": 2387.88,
+        "training_max": 2388.56,
+        "range": 0.68,
+        "is_constant": false
+      },
+      "sensor_14": {
+        "training_min": 8102.82,
+        "training_max": 8293.72,
+        "range": 190.9,
+        "is_constant": false
+      },
+      "sensor_15": {
+        "training_min": 8.3249,
+        "training_max": 8.5848,
+        "range": 0.2599,
+        "is_constant": false
+      },
+      "sensor_16": {
+        "training_min": 0.03,
+        "training_max": 0.03,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_17": {
+        "training_min": 388.0,
+        "training_max": 400.0,
+        "range": 12.0,
+        "is_constant": false
+      },
+      "sensor_18": {
+        "training_min": 2388.0,
+        "training_max": 2388.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_19": {
+        "training_min": 100.0,
+        "training_max": 100.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_20": {
+        "training_min": 38.14,
+        "training_max": 39.43,
+        "range": 1.29,
+        "is_constant": false
+      },
+      "sensor_21": {
+        "training_min": 22.8942,
+        "training_max": 23.6184,
+        "range": 0.7242,
+        "is_constant": false
+      }
+    },
+    "fitted_timestamp": "2026-11-04T03:31:53.779515+00:00",
+    "scaler_file": "models/scalers/scaler_FD001_tier3.pkl"
+  },
+  "FD002": {
+    "subset": "FD002",
+    "feature_tier": "tier3_extended",
+    "num_features_scaled": 24,
+    "ordered_feature_columns": [
+      "op_setting_1",
+      "op_setting_2",
+      "op_setting_3",
+      "sensor_1",
+      "sensor_2",
+      "sensor_3",
+      "sensor_4",
+      "sensor_5",
+      "sensor_6",
+      "sensor_7",
+      "sensor_8",
+      "sensor_9",
+      "sensor_10",
+      "sensor_11",
+      "sensor_12",
+      "sensor_13",
+      "sensor_14",
+      "sensor_15",
+      "sensor_16",
+      "sensor_17",
+      "sensor_18",
+      "sensor_19",
+      "sensor_20",
+      "sensor_21"
+    ],
+    "scaler_type": "SafeMinMaxScaler",
+    "feature_range": [
+      0.0,
+      1.0
+    ],
+    "training_partition_source": "train_FD002_split.csv",
+    "training_engines_count": 208,
+    "training_rows_count": 42889,
+    "validation_rows_count": 10870,
+    "test_rows_count": 33991,
+    "fitted_feature_parameters": {
+      "op_setting_1": {
+        "training_min": 0.0,
+        "training_max": 42.008,
+        "range": 42.008,
+        "is_constant": false
+      },
+      "op_setting_2": {
+        "training_min": 0.0,
+        "training_max": 0.842,
+        "range": 0.842,
+        "is_constant": false
+      },
+      "op_setting_3": {
+        "training_min": 60.0,
+        "training_max": 100.0,
+        "range": 40.0,
+        "is_constant": false
+      },
+      "sensor_1": {
+        "training_min": 445.0,
+        "training_max": 518.67,
+        "range": 73.67,
+        "is_constant": false
+      },
+      "sensor_2": {
+        "training_min": 535.53,
+        "training_max": 644.52,
+        "range": 108.99,
+        "is_constant": false
+      },
+      "sensor_3": {
+        "training_min": 1243.73,
+        "training_max": 1610.87,
+        "range": 367.14,
+        "is_constant": false
+      },
+      "sensor_4": {
+        "training_min": 1023.77,
+        "training_max": 1439.23,
+        "range": 415.46,
+        "is_constant": false
+      },
+      "sensor_5": {
+        "training_min": 3.91,
+        "training_max": 14.62,
+        "range": 10.71,
+        "is_constant": false
+      },
+      "sensor_6": {
+        "training_min": 5.71,
+        "training_max": 21.61,
+        "range": 15.9,
+        "is_constant": false
+      },
+      "sensor_7": {
+        "training_min": 136.8,
+        "training_max": 555.82,
+        "range": 419.02,
+        "is_constant": false
+      },
+      "sensor_8": {
+        "training_min": 1914.77,
+        "training_max": 2388.39,
+        "range": 473.62,
+        "is_constant": false
+      },
+      "sensor_9": {
+        "training_min": 7985.56,
+        "training_max": 9215.66,
+        "range": 1230.1,
+        "is_constant": false
+      },
+      "sensor_10": {
+        "training_min": 0.93,
+        "training_max": 1.3,
+        "range": 0.37,
+        "is_constant": false
+      },
+      "sensor_11": {
+        "training_min": 36.23,
+        "training_max": 48.51,
+        "range": 12.28,
+        "is_constant": false
+      },
+      "sensor_12": {
+        "training_min": 129.12,
+        "training_max": 523.29,
+        "range": 394.17,
+        "is_constant": false
+      },
+      "sensor_13": {
+        "training_min": 2027.61,
+        "training_max": 2390.48,
+        "range": 362.87,
+        "is_constant": false
+      },
+      "sensor_14": {
+        "training_min": 7848.36,
+        "training_max": 8268.5,
+        "range": 420.14,
+        "is_constant": false
+      },
+      "sensor_15": {
+        "training_min": 8.3357,
+        "training_max": 11.0669,
+        "range": 2.7312,
+        "is_constant": false
+      },
+      "sensor_16": {
+        "training_min": 0.02,
+        "training_max": 0.03,
+        "range": 0.01,
+        "is_constant": false
+      },
+      "sensor_17": {
+        "training_min": 303.0,
+        "training_max": 399.0,
+        "range": 96.0,
+        "is_constant": false
+      },
+      "sensor_18": {
+        "training_min": 1915.0,
+        "training_max": 2388.0,
+        "range": 473.0,
+        "is_constant": false
+      },
+      "sensor_19": {
+        "training_min": 84.93,
+        "training_max": 100.0,
+        "range": 15.07,
+        "is_constant": false
+      },
+      "sensor_20": {
+        "training_min": 10.19,
+        "training_max": 39.27,
+        "range": 29.08,
+        "is_constant": false
+      },
+      "sensor_21": {
+        "training_min": 6.0105,
+        "training_max": 23.5901,
+        "range": 17.5796,
+        "is_constant": false
+      }
+    },
+    "fitted_timestamp": "2026-11-04T03:31:56.222296+00:00",
+    "scaler_file": "models/scalers/scaler_FD002_tier3.pkl"
+  },
+  "FD003": {
+    "subset": "FD003",
+    "feature_tier": "tier3_extended",
+    "num_features_scaled": 24,
+    "ordered_feature_columns": [
+      "op_setting_1",
+      "op_setting_2",
+      "op_setting_3",
+      "sensor_1",
+      "sensor_2",
+      "sensor_3",
+      "sensor_4",
+      "sensor_5",
+      "sensor_6",
+      "sensor_7",
+      "sensor_8",
+      "sensor_9",
+      "sensor_10",
+      "sensor_11",
+      "sensor_12",
+      "sensor_13",
+      "sensor_14",
+      "sensor_15",
+      "sensor_16",
+      "sensor_17",
+      "sensor_18",
+      "sensor_19",
+      "sensor_20",
+      "sensor_21"
+    ],
+    "scaler_type": "SafeMinMaxScaler",
+    "feature_range": [
+      0.0,
+      1.0
+    ],
+    "training_partition_source": "train_FD003_split.csv",
+    "training_engines_count": 80,
+    "training_rows_count": 20177,
+    "validation_rows_count": 4543,
+    "test_rows_count": 16596,
+    "fitted_feature_parameters": {
+      "op_setting_1": {
+        "training_min": -0.0086,
+        "training_max": 0.008,
+        "range": 0.0166,
+        "is_constant": false
+      },
+      "op_setting_2": {
+        "training_min": -0.0006,
+        "training_max": 0.0006,
+        "range": 0.0012,
+        "is_constant": false
+      },
+      "op_setting_3": {
+        "training_min": 100.0,
+        "training_max": 100.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_1": {
+        "training_min": 518.67,
+        "training_max": 518.67,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_2": {
+        "training_min": 640.84,
+        "training_max": 645.11,
+        "range": 4.27,
+        "is_constant": false
+      },
+      "sensor_3": {
+        "training_min": 1564.3,
+        "training_max": 1615.39,
+        "range": 51.09,
+        "is_constant": false
+      },
+      "sensor_4": {
+        "training_min": 1377.06,
+        "training_max": 1441.16,
+        "range": 64.1,
+        "is_constant": false
+      },
+      "sensor_5": {
+        "training_min": 14.62,
+        "training_max": 14.62,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_6": {
+        "training_min": 21.45,
+        "training_max": 21.61,
+        "range": 0.16,
+        "is_constant": false
+      },
+      "sensor_7": {
+        "training_min": 549.61,
+        "training_max": 570.23,
+        "range": 20.62,
+        "is_constant": false
+      },
+      "sensor_8": {
+        "training_min": 2386.9,
+        "training_max": 2388.6,
+        "range": 1.7,
+        "is_constant": false
+      },
+      "sensor_9": {
+        "training_min": 9017.98,
+        "training_max": 9234.35,
+        "range": 216.37,
+        "is_constant": false
+      },
+      "sensor_10": {
+        "training_min": 1.29,
+        "training_max": 1.32,
+        "range": 0.03,
+        "is_constant": false
+      },
+      "sensor_11": {
+        "training_min": 46.69,
+        "training_max": 48.44,
+        "range": 1.75,
+        "is_constant": false
+      },
+      "sensor_12": {
+        "training_min": 517.77,
+        "training_max": 537.4,
+        "range": 19.63,
+        "is_constant": false
+      },
+      "sensor_13": {
+        "training_min": 2386.93,
+        "training_max": 2388.61,
+        "range": 1.68,
+        "is_constant": false
+      },
+      "sensor_14": {
+        "training_min": 8099.68,
+        "training_max": 8290.55,
+        "range": 190.87,
+        "is_constant": false
+      },
+      "sensor_15": {
+        "training_min": 8.1563,
+        "training_max": 8.5705,
+        "range": 0.4142,
+        "is_constant": false
+      },
+      "sensor_16": {
+        "training_min": 0.03,
+        "training_max": 0.03,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_17": {
+        "training_min": 388.0,
+        "training_max": 399.0,
+        "range": 11.0,
+        "is_constant": false
+      },
+      "sensor_18": {
+        "training_min": 2388.0,
+        "training_max": 2388.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_19": {
+        "training_min": 100.0,
+        "training_max": 100.0,
+        "range": 0.0,
+        "is_constant": true
+      },
+      "sensor_20": {
+        "training_min": 38.17,
+        "training_max": 39.85,
+        "range": 1.68,
+        "is_constant": false
+      },
+      "sensor_21": {
+        "training_min": 22.8726,
+        "training_max": 23.9505,
+        "range": 1.0779,
+        "is_constant": false
+      }
+    },
+    "fitted_timestamp": "2026-11-04T03:31:57.376455+00:00",
+    "scaler_file": "models/scalers/scaler_FD003_tier3.pkl"
+  },
+  "FD004": {
+    "subset": "FD004",
+    "feature_tier": "tier3_extended",
+    "num_features_scaled": 24,
+    "ordered_feature_columns": [
+      "op_setting_1",
+      "op_setting_2",
+      "op_setting_3",
+      "sensor_1",
+      "sensor_2",
+      "sensor_3",
+      "sensor_4",
+      "sensor_5",
+      "sensor_6",
+      "sensor_7",
+      "sensor_8",
+      "sensor_9",
+      "sensor_10",
+      "sensor_11",
+      "sensor_12",
+      "sensor_13",
+      "sensor_14",
+      "sensor_15",
+      "sensor_16",
+      "sensor_17",
+      "sensor_18",
+      "sensor_19",
+      "sensor_20",
+      "sensor_21"
+    ],
+    "scaler_type": "SafeMinMaxScaler",
+    "feature_range": [
+      0.0,
+      1.0
+    ],
+    "training_partition_source": "train_FD004_split.csv",
+    "training_engines_count": 199,
+    "training_rows_count": 48496,
+    "validation_rows_count": 12753,
+    "test_rows_count": 41214,
+    "fitted_feature_parameters": {
+      "op_setting_1": {
+        "training_min": 0.0,
+        "training_max": 42.008,
+        "range": 42.008,
+        "is_constant": false
+      },
+      "op_setting_2": {
+        "training_min": 0.0,
+        "training_max": 0.842,
+        "range": 0.842,
+        "is_constant": false
+      },
+      "op_setting_3": {
+        "training_min": 60.0,
+        "training_max": 100.0,
+        "range": 40.0,
+        "is_constant": false
+      },
+      "sensor_1": {
+        "training_min": 445.0,
+        "training_max": 518.67,
+        "range": 73.67,
+        "is_constant": false
+      },
+      "sensor_2": {
+        "training_min": 535.48,
+        "training_max": 644.42,
+        "range": 108.94,
+        "is_constant": false
+      },
+      "sensor_3": {
+        "training_min": 1242.98,
+        "training_max": 1613.0,
+        "range": 370.02,
+        "is_constant": false
+      },
+      "sensor_4": {
+        "training_min": 1024.42,
+        "training_max": 1440.77,
+        "range": 416.35,
+        "is_constant": false
+      },
+      "sensor_5": {
+        "training_min": 3.91,
+        "training_max": 14.62,
+        "range": 10.71,
+        "is_constant": false
+      },
+      "sensor_6": {
+        "training_min": 5.67,
+        "training_max": 21.61,
+        "range": 15.94,
+        "is_constant": false
+      },
+      "sensor_7": {
+        "training_min": 136.17,
+        "training_max": 570.81,
+        "range": 434.64,
+        "is_constant": false
+      },
+      "sensor_8": {
+        "training_min": 1914.72,
+        "training_max": 2388.6,
+        "range": 473.88,
+        "is_constant": false
+      },
+      "sensor_9": {
+        "training_min": 7984.51,
+        "training_max": 9196.81,
+        "range": 1212.3,
+        "is_constant": false
+      },
+      "sensor_10": {
+        "training_min": 0.93,
+        "training_max": 1.32,
+        "range": 0.39,
+        "is_constant": false
+      },
+      "sensor_11": {
+        "training_min": 36.04,
+        "training_max": 48.36,
+        "range": 12.32,
+        "is_constant": false
+      },
+      "sensor_12": {
+        "training_min": 128.31,
+        "training_max": 537.49,
+        "range": 409.18,
+        "is_constant": false
+      },
+      "sensor_13": {
+        "training_min": 2027.57,
+        "training_max": 2390.49,
+        "range": 362.92,
+        "is_constant": false
+      },
+      "sensor_14": {
+        "training_min": 7845.78,
+        "training_max": 8261.65,
+        "range": 415.87,
+        "is_constant": false
+      },
+      "sensor_15": {
+        "training_min": 8.1757,
+        "training_max": 11.0663,
+        "range": 2.8906,
+        "is_constant": false
+      },
+      "sensor_16": {
+        "training_min": 0.02,
+        "training_max": 0.03,
+        "range": 0.01,
+        "is_constant": false
+      },
+      "sensor_17": {
+        "training_min": 302.0,
+        "training_max": 398.0,
+        "range": 96.0,
+        "is_constant": false
+      },
+      "sensor_18": {
+        "training_min": 1915.0,
+        "training_max": 2388.0,
+        "range": 473.0,
+        "is_constant": false
+      },
+      "sensor_19": {
+        "training_min": 84.93,
+        "training_max": 100.0,
+        "range": 15.07,
+        "is_constant": false
+      },
+      "sensor_20": {
+        "training_min": 10.16,
+        "training_max": 39.89,
+        "range": 29.73,
+        "is_constant": false
+      },
+      "sensor_21": {
+        "training_min": 6.0843,
+        "training_max": 23.8852,
+        "range": 17.8009,
+        "is_constant": false
+      }
+    },
+    "fitted_timestamp": "2026-11-04T03:32:00.265803+00:00",
+    "scaler_file": "models/scalers/scaler_FD004_tier3.pkl"
+  }
+}
