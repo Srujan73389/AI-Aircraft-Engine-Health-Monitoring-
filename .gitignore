@@ -86,3 +86,12 @@ reports/eda/*.zip
 .env.local
 *.pem
 *.key
+
+
+# Temporary, cache, and backup directories
+.mplconfig/
+*/.mplconfig/
+backups/
+
+# Ephemeral multi-agent audit trails (keep summary reports)
+reports/agent_logs/*.jsonl

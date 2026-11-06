@@ -1,0 +1,127 @@
+{
+  "report_id": "report_e991ac449256",
+  "timestamp": "2026-11-06T13:32:20.907167+00:00",
+  "subset": "FD001",
+  "total_tests_run": 8,
+  "passed_tests_count": 8,
+  "failed_tests_count": 0,
+  "all_contained": true,
+  "summary_metrics": {
+    "total_adversarial_scenarios": 8,
+    "contained_count": 8,
+    "uncontained_count": 0,
+    "containment_rate_pct": 100.0,
+    "total_execution_ms": 760.67
+  },
+  "incidents": [
+    {
+      "failure_mode": "corrupted_telemetry_nan_inf",
+      "description": "Injection of NaN and Inf floats into telemetry and operating context.",
+      "contained_safely": true,
+      "status_assigned": "REJECTED_AT_INGESTION",
+      "exception_type": "ValueError",
+      "exception_message": "MonitoringInput: non-finite telemetry for T30: nan",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "nan_rejected": true,
+        "inf_rejected": true
+      }
+    },
+    {
+      "failure_mode": "missing_sensor_channels",
+      "description": "Dropping required sensor attribute T30 from engine state during monitoring ingestion.",
+      "contained_safely": true,
+      "status_assigned": "REJECTED_WITH_ERROR",
+      "exception_type": "TypeError",
+      "exception_message": "Provided state lacks required EngineState attribute 'T30'",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "missing_attribute_detected": true
+      }
+    },
+    {
+      "failure_mode": "monitoring_agent_runtime_crash",
+      "description": "Injected unhandled RuntimeError inside MonitoringAgent.process_engine_state.",
+      "contained_safely": true,
+      "status_assigned": "FAILED",
+      "exception_type": "RuntimeError",
+      "exception_message": "MonitoringAgent failed: Simulated Hardware Telemetry Bus Deserialization Fault",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "orchestration_status": "FAILED"
+      }
+    },
+    {
+      "failure_mode": "diagnosis_agent_runtime_crash",
+      "description": "Injected unhandled RuntimeError inside DiagnosisAgent.diagnose.",
+      "contained_safely": true,
+      "status_assigned": "WARNING",
+      "exception_type": "RuntimeError",
+      "exception_message": "DiagnosisAgent failed: Simulated Aerothermal Knowledge Base Query Timeout",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "monitoring_preserved": true,
+        "prognostics_preserved": true
+      }
+    },
+    {
+      "failure_mode": "prognostics_agent_runtime_crash",
+      "description": "Injected unhandled RuntimeError inside PrognosticsAgent.process_engine_state.",
+      "contained_safely": true,
+      "status_assigned": "WARNING",
+      "exception_type": "RuntimeError",
+      "exception_message": "PrognosticsAgent failed: Simulated Neural Network GPU Out Of Memory",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "monitoring_preserved": true,
+        "diagnosis_preserved": true
+      }
+    },
+    {
+      "failure_mode": "safety_firewall_tampering_rejection",
+      "description": "Attempt to tamper with immutable telemetry T30 and inject negative RUL.",
+      "contained_safely": true,
+      "status_assigned": "BLOCKED_BY_FIREWALL",
+      "exception_type": "SafetyViolationError",
+      "exception_message": "CRITICAL SAFETY VIOLATION: Agent output attempted to modify immutable physical field 'T30'! Original: 1593.52, Candidate: 1608.52.",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "telemetry_tampering_blocked": true,
+        "negative_rul_blocked": true
+      }
+    },
+    {
+      "failure_mode": "audit_logger_io_failure_resilience",
+      "description": "Simulated unwriteable storage destination Z:\\nonexistent_network_drive_9999.",
+      "contained_safely": true,
+      "status_assigned": "SUCCESS",
+      "exception_type": "IOError/OSError",
+      "exception_message": "Suppressed cleanly by non-blocking logger fault containment.",
+      "telemetry_preserved": true,
+      "audit_logged": false,
+      "details": {
+        "orchestration_completed": true
+      }
+    },
+    {
+      "failure_mode": "recovery_after_failure",
+      "description": "Transient communication dropout during diagnosis followed by nominal recovery on cycle t+1.",
+      "contained_safely": true,
+      "status_assigned": "SUCCESS",
+      "exception_type": null,
+      "exception_message": "Fully recovered to full capability on subsequent cycle.",
+      "telemetry_preserved": true,
+      "audit_logged": true,
+      "details": {
+        "cycle_t_failed_safely": true,
+        "cycle_t_plus_1_recovered": true
+      }
+    }
+  ]
+}
