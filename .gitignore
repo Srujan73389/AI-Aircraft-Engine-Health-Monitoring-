@@ -95,3 +95,4 @@ backups/
 
 # Ephemeral multi-agent audit trails (keep summary reports)
 reports/agent_logs/*.jsonl
+reports/safety_logs/*.jsonl

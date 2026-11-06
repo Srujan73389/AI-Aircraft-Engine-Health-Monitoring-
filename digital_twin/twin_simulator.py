@@ -348,3 +348,21 @@ class DigitalTwinSimulator:
             return pd.DataFrame()
         records = [s.to_dict(include_arrays=False) for s in self.state_history]
         return pd.DataFrame(records)
+
+    def apply_safe_action(
+        self,
+        action: Any,
+        governor: Optional[Any] = None,
+        operator_approval: bool = False,
+    ) -> Any:
+        """
+        Executes a closed-loop safe simulation action on the digital twin.
+        Gated by the Phase 7 ClosedLoopSafetyGovernor.
+        """
+        from safety.closed_loop import ClosedLoopSafetyGovernor
+        gov = governor or ClosedLoopSafetyGovernor()
+        return gov.apply_simulation_action(
+            simulator_or_state=self,
+            action=action,
+            operator_approval=operator_approval,
+        )
