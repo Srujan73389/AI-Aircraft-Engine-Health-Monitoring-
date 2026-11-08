@@ -92,6 +92,14 @@ reports/eda/*.zip
 .mplconfig/
 */.mplconfig/
 backups/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node dependencies and frontend build outputs
+node_modules/
+frontend/node_modules/
+frontend/dist/
 
 # Ephemeral multi-agent audit trails (keep summary reports)
 reports/agent_logs/*.jsonl
