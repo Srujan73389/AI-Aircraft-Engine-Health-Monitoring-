@@ -184,6 +184,10 @@ def extract_flattened_window(
     return X_sub.reshape(N, W * K).astype(np.float32)
 
 
+# Process-level in-memory cache to prevent redundant disk I/O on identical checkpoints
+_CHAMPION_MODEL_CACHE: Dict[Tuple[str, str], Tuple[xgb.XGBRegressor, nn.Module]] = {}
+
+
 class PrognosticsModelManager:
     """
     Manages loading, feature preparation, and inference for the 8 Phase 4 champion models.
@@ -215,6 +219,12 @@ class PrognosticsModelManager:
         """
         Loads the champion XGBoost and LSTM checkpoints from disk.
         """
+        cache_key = (self.subset, os.path.abspath(self.checkpoint_dir))
+        if cache_key in _CHAMPION_MODEL_CACHE:
+            self.xgb_model, self.lstm_model = _CHAMPION_MODEL_CACHE[cache_key]
+            self.is_loaded = True
+            return
+
         xgb_cfg = self.config["xgb"]
         lstm_cfg = self.config["lstm"]
 
@@ -257,6 +267,7 @@ class PrognosticsModelManager:
         self.lstm_model.eval()
 
         self.is_loaded = True
+        _CHAMPION_MODEL_CACHE[cache_key] = (self.xgb_model, self.lstm_model)
 
     def validate_sequence_input(self, seq_tensor: np.ndarray) -> np.ndarray:
         """

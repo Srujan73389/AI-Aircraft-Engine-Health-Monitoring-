@@ -117,7 +117,8 @@ class FastAPITestClientAdapter:
             if "/fleet/" in path and path.endswith("/engines"):
                 parts = path.strip("/").split("/")
                 subset = parts[parts.index("fleet") + 1]
-                engines_data = fleet.get_subset_engines(subset=subset)
+                split_val = qp.get("split", "train")
+                engines_data = fleet.get_subset_engines(subset=subset, split=split_val)
                 return _MockResponse(200, engines_data)
 
             # 3. /api/v1/engine/{subset}/{unit}/cycle/{cycle}
@@ -126,7 +127,8 @@ class FastAPITestClientAdapter:
                 subset = parts[parts.index("engine") + 1]
                 unit = int(parts[parts.index("engine") + 2])
                 cycle = int(parts[parts.index("cycle") + 1])
-                res = fleet.get_engine_cycle_state(subset=subset, unit=unit, cycle=cycle)
+                split_val = qp.get("split", "train")
+                res = fleet.get_engine_cycle_state(subset=subset, unit=unit, cycle=cycle, split=split_val)
                 return _MockResponse(200, res.model_dump())
 
             # 4. /api/v1/engine/{subset}/{unit}/sensors
@@ -134,7 +136,8 @@ class FastAPITestClientAdapter:
                 parts = path.strip("/").split("/")
                 subset = parts[parts.index("engine") + 1]
                 unit = int(parts[parts.index("engine") + 2])
-                res = monitoring.get_engine_sensors(subset=subset, unit=unit)
+                split_val = qp.get("split", "train")
+                res = monitoring.get_engine_sensors(subset=subset, unit=unit, split=split_val)
                 return _MockResponse(200, res.model_dump())
 
             # 5. /api/v1/safety/audit-trail

@@ -67,25 +67,30 @@ def predict_rul(req: RULPredictionRequest) -> RULPredictionResponse:
         # Case B: Engine unit number and cycle specified
         else:
             unit_id = req.unit_number if req.unit_number is not None else 1
+            split_val = (req.split or "train").lower()
+            if split_val not in ("train", "test"):
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Invalid split '{req.split}'. Must be either 'train' or 'test'."
+                )
+
             sim = DigitalTwinSimulator(subset=sub_upper, enable_ml_inference=True)
-            available = sim.loader.get_available_units(subset=sub_upper, split="train")
+            available = sim.loader.get_available_units(subset=sub_upper, split=split_val)
             if unit_id not in available:
                 raise HTTPException(
                     status_code=404,
-                    detail=f"Engine unit {unit_id} not found in subset '{sub_upper}'. Valid engine ID range is {min(available)} to {max(available)} (total {len(available)} engines)."
+                    detail=f"Engine unit {unit_id} not found in subset '{sub_upper}' ({split_val}). Valid engine ID range is {min(available)} to {max(available)} (total {len(available)} engines)."
                 )
 
-            sim.load_engine(unit_number=unit_id, split="train")
-            max_cycle = sim.loader.load_engine_trajectory(sub_upper, unit_id, split="train")["time_cycles"].max()
+            sim.load_engine(unit_number=unit_id, split=split_val)
+            max_cycle = sim.loader.load_engine_trajectory(sub_upper, unit_id, split=split_val)["time_cycles"].max()
             if req.cycle is not None:
                 if req.cycle > max_cycle:
                     raise HTTPException(
                         status_code=400,
-                        detail=f"Requested cycle {req.cycle} exceeds engine {unit_id} maximum cycle {max_cycle}."
+                        detail=f"Requested cycle {req.cycle} exceeds engine {unit_id} ({split_val}) maximum cycle {max_cycle}."
                     )
-                while sim.current_state and sim.current_state.time_cycles < req.cycle:
-                    if sim.step() is None:
-                        break
+                sim.advance_to_cycle(req.cycle)
                 cycle_idx = req.cycle
             else:
                 cycle_idx = sim.current_state.time_cycles
@@ -108,6 +113,7 @@ def predict_rul(req: RULPredictionRequest) -> RULPredictionResponse:
             subset=sub_upper,
             unit_number=unit_id,
             cycle=cycle_idx,
+            split=split_val if 'split_val' in locals() else "train",
             predicted_rul_xgboost=round(rul_xgb, 2),
             predicted_rul_lstm=round(rul_lstm, 2),
             prognostic_spread=round(spread, 2),

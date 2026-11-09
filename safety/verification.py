@@ -254,7 +254,21 @@ class SafetyVerifier:
             Comprehensive safety verdict, provenance validation, and violations list.
         """
         # 1. Normalize current state to dictionary
-        if hasattr(current_state, "to_dict"):
+        if hasattr(current_state, "current_state") and getattr(current_state, "current_state") is not None:
+            c_s = getattr(current_state, "current_state")
+            if hasattr(c_s, "to_dict"):
+                state_dict = c_s.to_dict(include_arrays=True)
+            elif isinstance(c_s, dict):
+                state_dict = dict(c_s)
+            elif hasattr(c_s, "__dict__"):
+                state_dict = {
+                    k: v
+                    for k, v in vars(c_s).items()
+                    if not k.startswith("_") and not callable(v)
+                }
+            else:
+                state_dict = {}
+        elif hasattr(current_state, "to_dict"):
             state_dict = current_state.to_dict(include_arrays=True)
         elif isinstance(current_state, dict):
             state_dict = dict(current_state)

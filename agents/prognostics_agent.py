@@ -78,6 +78,7 @@ class PrognosticsAgent:
         caution_threshold: float = DEFAULT_CAUTION_THRESHOLD,
         rul_max_plateau: float = DEFAULT_RUL_MAX_PLATEAU,
         ensemble_weights: Tuple[float, float] = (0.5, 0.5),  # (xgb_weight, lstm_weight)
+        temporal_transformer: Optional[Any] = None,
     ):
         """
         Initializes the Prognostics Agent.
@@ -89,12 +90,14 @@ class PrognosticsAgent:
             caution_threshold: Operational cycle threshold triggering maintenance caution (default: 45 cycles).
             rul_max_plateau: Piecewise linear RUL ceiling for health index normalization (default: 125 cycles).
             ensemble_weights: Tuple of (weight_xgb, weight_lstm), must sum to 1.0.
+            temporal_transformer: Optional Temporal Transformer self-attention model for transformer-based RUL forecasting.
         """
         self.agent_id = agent_id
         self.default_subset = subset.upper()
         self.checkpoint_dir = checkpoint_dir
         self.caution_threshold = float(caution_threshold)
         self.rul_max_plateau = max(1.0, float(rul_max_plateau))
+        self.temporal_transformer = temporal_transformer
 
         # Normalize ensemble weights
         w_xgb, w_lstm = ensemble_weights
@@ -325,3 +328,9 @@ class PrognosticsAgent:
         )
 
         return self.process_input(inp)
+
+    def predict_transformer_rul(self, sequence: Any, enable_mc_dropout: bool = False) -> Optional[Dict[str, Any]]:
+        """Evaluates sequence window with integrated Temporal Transformer self-attention model."""
+        if self.temporal_transformer is None:
+            return None
+        return self.temporal_transformer.predict_rul(sequence, enable_mc_dropout=enable_mc_dropout)

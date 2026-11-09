@@ -183,6 +183,7 @@ class MonitoringAgent:
         anomaly_thresholds: Optional[Dict[str, float]] = None,
         thermodynamic_bounds: Optional[Dict[str, Dict[str, float]]] = None,
         persistence_alert_window: int = 3,
+        lstm_ae_detector: Optional[Any] = None,
     ):
         """
         Initializes the Monitoring Agent with configurable operating thresholds.
@@ -194,10 +195,12 @@ class MonitoringAgent:
             anomaly_thresholds: Custom decision thresholds for Isolation Forest and PCA-SPE.
             thermodynamic_bounds: Custom absolute thermodynamic limits.
             persistence_alert_window: Consecutive anomalous cycle count required to trigger persistence_alert (default: 3).
+            lstm_ae_detector: Optional LSTM-AE anomaly detector instance for deep sequence reconstruction.
         """
         self.agent_id = agent_id
         self.subset = subset.upper()
         self.persistence_alert_window = max(1, persistence_alert_window)
+        self.lstm_ae_detector = lstm_ae_detector
 
         # Set sensor operating thresholds (merging custom over defaults)
         self.sensor_thresholds = dict(DEFAULT_FD001_OPERATING_THRESHOLDS)
@@ -494,7 +497,16 @@ class MonitoringAgent:
             if pca_score > pca_tau:
                 pca_spe_breach = True
 
-        model_anomaly_flag = isolation_forest_breach or pca_spe_breach
+        lstm_score = inp.anomaly_scores.get("lstm_ae")
+        if lstm_score is None:
+            lstm_score = inp.anomaly_scores.get("anomaly_score_lstm_ae")
+        lstm_tau = self.anomaly_thresholds.get("lstm_ae", 0.05)
+        lstm_ae_breach = False
+        if lstm_score is not None and math.isfinite(lstm_score):
+            if lstm_score > lstm_tau:
+                lstm_ae_breach = True
+
+        model_anomaly_flag = isolation_forest_breach or pca_spe_breach or lstm_ae_breach
 
         # ---------------------------------------------------------------------
         # 3. Multi-Cycle Persistence Tracking
@@ -643,3 +655,11 @@ class MonitoringAgent:
         )
 
         return self.process_input(inp)
+
+    def evaluate_sequence_with_lstm_ae(self, sequence: Any) -> Optional[Dict[str, Any]]:
+        """Evaluates multivariate sensor sequence with integrated LSTM-AE detector."""
+        if self.lstm_ae_detector is None:
+            return None
+        return self.lstm_ae_detector.evaluate_sequence(sequence)
+
+    evaluate = process_input

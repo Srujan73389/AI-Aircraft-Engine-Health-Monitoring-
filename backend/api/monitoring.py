@@ -4,7 +4,7 @@ Phase 8 - Step 8.2: Endpoints for sensor history trends and statistical anomaly 
 """
 
 from typing import Any, Dict, List
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Query
 
 from backend.schemas.api_schemas import (
     SensorTrendsResponse,
@@ -22,23 +22,31 @@ router = APIRouter(tags=["Health Monitoring & Anomaly Detection"])
 def get_engine_sensors(
     subset: str = Path(..., description="C-MAPSS subset ('FD001' to 'FD004')"),
     unit: int = Path(..., ge=1, description="Engine unit ID"),
+    split: str = Query("train", pattern="^(train|test)$", description="Dataset partition ('train' or 'test')"),
 ) -> SensorTrendsResponse:
     """
     Retrieves full-flight multi-sensor time-series telemetry trends for visualization and trending.
     """
     sub_upper = subset.upper()
+    split_str = split if isinstance(split, str) else "train"
+    split_lower = split_str.lower()
+    if sub_upper not in ("FD001", "FD002", "FD003", "FD004"):
+        raise HTTPException(
+            status_code=404,
+            detail=f"Subset '{subset}' not found. Supported subsets: ['FD001', 'FD002', 'FD003', 'FD004']"
+        )
     try:
         loader = TrajectoryLoader()
-        available_units = loader.get_available_units(subset=sub_upper, split="train")
+        available_units = loader.get_available_units(subset=sub_upper, split=split_lower)
         if unit not in available_units:
             min_u = min(available_units)
             max_u = max(available_units)
             raise HTTPException(
                 status_code=404,
-                detail=f"Engine unit {unit} not found in subset '{sub_upper}'. Valid engine ID range is {min_u} to {max_u} (total {len(available_units)} engines)."
+                detail=f"Engine unit {unit} not found in subset '{sub_upper}' ({split_lower}). Valid engine ID range is {min_u} to {max_u} (total {len(available_units)} engines)."
             )
 
-        df_traj = loader.load_engine_trajectory(subset=sub_upper, unit_number=unit, split="train")
+        df_traj = loader.load_engine_trajectory(subset=sub_upper, unit_number=unit, split=split_lower)
         cycles = df_traj["time_cycles"].astype(int).tolist()
 
         # All 21 standard C-MAPSS telemetry sensor channels
@@ -55,10 +63,13 @@ def get_engine_sensors(
             cycle_history=cycles,
             sensor_names=list(trends.keys()),
             trends=trends,
+            split=split_lower,
             disclaimer=ACADEMIC_SIMULATION_DISCLAIMER,
         )
+    except HTTPException:
+        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed loading sensor trends for {sub_upper} Unit {unit}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed loading sensor trends for {sub_upper} Unit {unit} ({split_lower}): {str(e)}")
 
 
 @router.post("/monitoring/anomaly-check", response_model=AnomalyCheckResponse)
@@ -112,7 +123,18 @@ def check_anomaly(req: AnomalyCheckRequest) -> AnomalyCheckResponse:
     pca_breached = pca_score > tau_pca
     is_anomaly = if_breached or pca_breached
 
-    if if_breached and pca_breached:
+    consecutive_count = 3 if (is_anomaly and (req.cycle or 1) >= 3) else (1 if is_anomaly else 0)
+    if req.consecutive_breaches is not None:
+        consecutive_count = req.consecutive_breaches if is_anomaly else 0
+    persistence_alarm = is_anomaly and consecutive_count >= 3
+
+    if not is_anomaly:
+        severity = "NOMINAL"
+        summary = f"Telemetry is nominal on {sub_upper}; zero threshold crossings observed."
+    elif req.consecutive_breaches == 1:
+        severity = "CAUTION"
+        summary = f"Single-cycle transient anomaly spike detected on {sub_upper}; persistence filter suppressing alert (1/3 cycles)."
+    elif if_breached and pca_breached:
         severity = "CRITICAL"
         summary = f"Dual-model persistent anomaly detected on {sub_upper}: iForest ({if_score:.4f} > {tau_if:.4f}) and PCA-SPE ({pca_score:.4f} > {tau_pca:.4f})."
     elif if_breached or pca_breached:
@@ -121,9 +143,6 @@ def check_anomaly(req: AnomalyCheckRequest) -> AnomalyCheckResponse:
     else:
         severity = "NOMINAL"
         summary = f"Telemetry is nominal on {sub_upper}; zero threshold crossings observed."
-
-    consecutive_count = 3 if (is_anomaly and (req.cycle or 1) >= 3) else (1 if is_anomaly else 0)
-    persistence_alarm = is_anomaly and consecutive_count >= 3
 
     return AnomalyCheckResponse(
         subset=sub_upper,

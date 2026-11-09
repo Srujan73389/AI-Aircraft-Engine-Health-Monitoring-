@@ -324,11 +324,17 @@ class CMAPSSScalingPipeline:
         with open(filepath, "wb") as f:
             pickle.dump(self, f)
 
+    _SCALER_LOAD_CACHE = {}
+
     @staticmethod
     def load(filepath: str) -> "CMAPSSScalingPipeline":
         """Load serialized pipeline from disk."""
+        abs_p = os.path.abspath(filepath)
+        if abs_p in CMAPSSScalingPipeline._SCALER_LOAD_CACHE:
+            return CMAPSSScalingPipeline._SCALER_LOAD_CACHE[abs_p]
         with open(filepath, "rb") as f:
             pipeline = pickle.load(f)
+        CMAPSSScalingPipeline._SCALER_LOAD_CACHE[abs_p] = pipeline
         return pipeline
 
 

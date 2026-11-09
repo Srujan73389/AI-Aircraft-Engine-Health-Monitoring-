@@ -4,7 +4,7 @@ Phase 8 - Step 8.2: Endpoints for subset discovery, engine inventory, and cycle 
 """
 
 from typing import Any, Dict, List
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path, Query
 
 from backend.schemas.api_schemas import (
     FleetSubsetInfo,
@@ -62,10 +62,13 @@ def get_subsets() -> List[FleetSubsetInfo]:
 
 @router.get("/fleet/{subset}/engines", response_model=List[int])
 def get_subset_engines(
-    subset: str = Path(..., description="C-MAPSS subset identifier ('FD001' to 'FD004')")
+    subset: str = Path(..., description="C-MAPSS subset identifier ('FD001' to 'FD004')"),
+    split: str = Query("train", pattern="^(train|test)$", description="Dataset partition ('train' or 'test')"),
 ) -> List[int]:
-    """Retrieve list of available engine unit numbers for a given dataset subset."""
+    """Retrieve list of available engine unit numbers for a given dataset subset and split."""
     sub_upper = subset.upper()
+    split_str = split if isinstance(split, str) else "train"
+    split_lower = split_str.lower()
     if sub_upper not in FLEET_CATALOG:
         raise HTTPException(
             status_code=404,
@@ -73,23 +76,37 @@ def get_subset_engines(
         )
     try:
         loader = TrajectoryLoader()
-        units = loader.get_available_units(subset=sub_upper, split="train")
+        units = loader.get_available_units(subset=sub_upper, split=split_lower)
         return units
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to load engine list for {sub_upper}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to load engine list for {sub_upper} ({split_lower}): {str(e)}")
 
 
 @router.get("/engine/{subset}/{unit}/cycle/{cycle}", response_model=EngineCycleState)
 def get_engine_cycle_state(
     subset: str = Path(..., description="C-MAPSS subset ('FD001' to 'FD004')"),
-    unit: int = Path(..., ge=1, description="Engine unit ID"),
-    cycle: int = Path(..., ge=1, description="Operational flight cycle"),
+    unit: int = Path(..., description="Engine unit ID"),
+    cycle: int = Path(..., description="Operational flight cycle"),
+    split: str = Query("train", pattern="^(train|test)$", description="Dataset partition ('train' or 'test')"),
 ) -> EngineCycleState:
     """
     Constructs and returns the full 40-variable Digital Twin state vector (G1 to G40)
     for a given engine and operational cycle.
     """
+    if cycle < 1:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Requested cycle {cycle} must be a positive integer >= 1."
+        )
+    if unit < 1:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Requested unit {unit} must be a positive integer >= 1."
+        )
+
     sub_upper = subset.upper()
+    split_str = split if isinstance(split, str) else "train"
+    split_lower = split_str.lower()
     if sub_upper not in FLEET_CATALOG:
         raise HTTPException(
             status_code=404,
@@ -98,27 +115,25 @@ def get_engine_cycle_state(
 
     try:
         loader = TrajectoryLoader()
-        available_units = loader.get_available_units(subset=sub_upper, split="train")
+        available_units = loader.get_available_units(subset=sub_upper, split=split_lower)
         if unit not in available_units:
             min_u = min(available_units)
             max_u = max(available_units)
             raise HTTPException(
                 status_code=404,
-                detail=f"Engine unit {unit} not found in subset '{sub_upper}'. Valid engine ID range is {min_u} to {max_u} (total {len(available_units)} engines)."
+                detail=f"Engine unit {unit} not found in subset '{sub_upper}' ({split_lower}). Valid engine ID range is {min_u} to {max_u} (total {len(available_units)} engines)."
             )
 
         sim = DigitalTwinSimulator(subset=sub_upper, enable_ml_inference=True)
-        sim.load_engine(unit_number=unit, split="train")
-        max_cycle = sim.loader.load_engine_trajectory(sub_upper, unit, split="train")["time_cycles"].max()
+        sim.load_engine(unit_number=unit, split=split_lower)
+        max_cycle = sim.loader.load_engine_trajectory(sub_upper, unit, split=split_lower)["time_cycles"].max()
         if cycle > max_cycle:
             raise HTTPException(
                 status_code=400,
-                detail=f"Requested cycle {cycle} exceeds engine {unit} maximum cycle {max_cycle}."
+                detail=f"Requested cycle {cycle} exceeds engine {unit} ({split_lower}) maximum cycle {max_cycle}."
             )
 
-        while sim.current_state and sim.current_state.time_cycles < cycle:
-            if sim.step() is None:
-                break
+        sim.advance_to_cycle(cycle)
 
         raw_state = sim.current_state.to_dict(include_arrays=False)
         state_dict = dict(raw_state)
@@ -132,6 +147,7 @@ def get_engine_cycle_state(
             subset=sub_upper,
             unit_number=unit,
             cycle=cycle,
+            split=split_lower,
             state_vector=state_dict,
             disclaimer=ACADEMIC_SIMULATION_DISCLAIMER,
         )
@@ -140,5 +156,5 @@ def get_engine_cycle_state(
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=f"Error constructing state for {sub_upper} Unit {unit} Cycle {cycle}: {str(e)}"
+            detail=f"Error constructing state for {sub_upper} Unit {unit} ({split_lower}) Cycle {cycle}: {str(e)}"
         )

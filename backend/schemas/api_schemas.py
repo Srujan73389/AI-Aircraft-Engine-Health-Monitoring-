@@ -34,6 +34,7 @@ class EngineCycleState(BaseModel):
     subset: str = Field(..., description="C-MAPSS subset")
     unit_number: int = Field(..., description="Engine unit number")
     cycle: int = Field(..., description="Current operational flight cycle")
+    split: str = Field(default="train", description="Dataset split ('train' or 'test')")
     state_vector: Dict[str, Any] = Field(..., description="Complete 40-variable state vector S(t) (G1 to G40)")
     disclaimer: str = Field(default=ACADEMIC_SIMULATION_DISCLAIMER, description="Academic simulation non-authority disclaimer")
 
@@ -49,6 +50,7 @@ class SensorTrendsResponse(BaseModel):
     cycle_history: List[int]
     sensor_names: List[str]
     trends: Dict[str, List[float]]
+    split: str = Field(default="train", description="Dataset split ('train' or 'test')")
     disclaimer: str = Field(default=ACADEMIC_SIMULATION_DISCLAIMER)
 
 
@@ -56,8 +58,10 @@ class AnomalyCheckRequest(BaseModel):
     subset: str = Field(default="FD001", description="C-MAPSS subset")
     unit_number: Optional[int] = Field(default=None, description="Optional engine ID for recorded lookup")
     cycle: Optional[int] = Field(default=None, description="Optional flight cycle for recorded lookup")
+    split: Optional[str] = Field(default="train", description="Dataset split ('train' or 'test')")
     sensor_readings: Optional[Dict[str, Any]] = Field(default=None, description="Current cycle sensor telemetry map")
     anomaly_scores: Optional[Dict[str, Any]] = Field(default=None, description="Pre-computed anomaly scores")
+    consecutive_breaches: Optional[int] = Field(default=None, description="Rolling consecutive anomaly breach count")
 
 
 class AnomalyCheckResponse(BaseModel):
@@ -83,6 +87,7 @@ class RULPredictionRequest(BaseModel):
     subset: str = Field(default="FD001", description="C-MAPSS subset identifier")
     unit_number: Optional[int] = Field(default=None, description="Optional engine ID to predict from trajectory")
     cycle: Optional[int] = Field(default=None, description="Operational cycle index (defaults to latest)")
+    split: Optional[str] = Field(default="train", description="Dataset partition ('train' or 'test')")
     sequence_tensor: Optional[List[List[float]]] = Field(
         default=None,
         description="Direct (30, D) temporal sequence matrix (14 channels for FD001, 24 for FD002-FD004)"
@@ -101,6 +106,7 @@ class RULPredictionResponse(BaseModel):
     subset: str
     unit_number: Optional[int] = None
     cycle: Optional[int] = None
+    split: str = Field(default="train", description="Dataset partition ('train' or 'test')")
     predicted_rul_xgboost: float
     predicted_rul_lstm: float
     prognostic_spread: float

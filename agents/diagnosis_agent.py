@@ -113,6 +113,7 @@ class DiagnosisAgent:
         subset: str = "FD001",
         baseline_references: Optional[Dict[str, float]] = None,
         confidence_ceiling: float = 0.95,
+        cnn_fault_classifier: Optional[Any] = None,
     ):
         """
         Initializes the Diagnosis Agent.
@@ -122,10 +123,12 @@ class DiagnosisAgent:
             subset: C-MAPSS dataset subset identifier ("FD001", "FD002", etc.).
             baseline_references: Nominal sensor reference dictionary. Defaults to FD001 nominal baselines.
             confidence_ceiling: Maximum allowed confidence score in [0.0, 1.0], strictly bounded <= 0.95.
+            cnn_fault_classifier: Optional 1D-CNN deep fault classifier for temporal sequence pattern diagnosis.
         """
         self.agent_id = agent_id
         self.subset = subset.upper()
         self.confidence_ceiling = min(float(confidence_ceiling), self.MAX_CONFIDENCE_BOUND)
+        self.cnn_fault_classifier = cnn_fault_classifier
 
         # Baseline reference table
         self.baseline_references = dict(DEFAULT_FD001_BASELINES)
@@ -554,3 +557,9 @@ class DiagnosisAgent:
 
         output.validate()
         return output
+
+    def diagnose_with_cnn(self, sequence: Any, compute_saliency: bool = False) -> Optional[Dict[str, Any]]:
+        """Evaluates multivariate sensor sequence with integrated 1D-CNN fault classifier."""
+        if self.cnn_fault_classifier is None:
+            return None
+        return self.cnn_fault_classifier.diagnose_sequence(sequence, compute_saliency=compute_saliency)

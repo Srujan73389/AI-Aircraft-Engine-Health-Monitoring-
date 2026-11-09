@@ -88,42 +88,72 @@ class FastAPITestClientAdapter:
 
         # Direct route resolution for sandboxed mode
         from backend.api import fleet, monitoring, safety
+        from fastapi import HTTPException
 
-        # 1. /api/v1/fleet/subsets
-        if url.endswith("/fleet/subsets"):
-            subsets_data = [s.model_dump() for s in fleet.get_subsets()]
-            return _MockResponse(200, subsets_data)
+        try:
+            # 1. /api/v1/fleet/subsets
+            if url.endswith("/fleet/subsets"):
+                subsets_data = [s.model_dump() for s in fleet.get_subsets()]
+                return _MockResponse(200, subsets_data)
 
-        # 2. /api/v1/fleet/{subset}/engines
-        if "/fleet/" in url and url.endswith("/engines"):
-            parts = url.strip("/").split("/")
-            subset = parts[parts.index("fleet") + 1]
-            engines_data = fleet.get_subset_engines(subset=subset)
-            return _MockResponse(200, engines_data)
+            # 2. /api/v1/fleet/{subset}/engines
+            if "/fleet/" in url and "/engines" in url:
+                path = url.split("?")[0]
+                qp = {}
+                if "?" in url:
+                    for pair in url.split("?", 1)[1].split("&"):
+                        if "=" in pair:
+                            k, v = pair.split("=", 1)
+                            qp[k] = v
+                parts = path.strip("/").split("/")
+                subset = parts[parts.index("fleet") + 1]
+                split_val = qp.get("split", "train")
+                engines_data = fleet.get_subset_engines(subset=subset, split=split_val)
+                return _MockResponse(200, engines_data)
 
-        # 3. /api/v1/engine/{subset}/{unit}/cycle/{cycle}
-        if "/engine/" in url and "/cycle/" in url:
-            parts = url.strip("/").split("/")
-            subset = parts[parts.index("engine") + 1]
-            unit = int(parts[parts.index("engine") + 2])
-            cycle = int(parts[parts.index("cycle") + 1])
-            res = fleet.get_engine_cycle_state(subset=subset, unit=unit, cycle=cycle)
-            return _MockResponse(200, res.model_dump())
+            # 3. /api/v1/engine/{subset}/{unit}/cycle/{cycle}
+            if "/engine/" in url and "/cycle/" in url:
+                path = url.split("?")[0]
+                qp = {}
+                if "?" in url:
+                    for pair in url.split("?", 1)[1].split("&"):
+                        if "=" in pair:
+                            k, v = pair.split("=", 1)
+                            qp[k] = v
+                parts = path.strip("/").split("/")
+                subset = parts[parts.index("engine") + 1]
+                unit = int(parts[parts.index("engine") + 2])
+                cycle = int(parts[parts.index("cycle") + 1])
+                split_val = qp.get("split", "train")
+                res = fleet.get_engine_cycle_state(subset=subset, unit=unit, cycle=cycle, split=split_val)
+                return _MockResponse(200, res.model_dump())
 
-        # 4. /api/v1/engine/{subset}/{unit}/sensors
-        if "/engine/" in url and url.endswith("/sensors"):
-            parts = url.strip("/").split("/")
-            subset = parts[parts.index("engine") + 1]
-            unit = int(parts[parts.index("engine") + 2])
-            res = monitoring.get_engine_sensors(subset=subset, unit=unit)
-            return _MockResponse(200, res.model_dump())
+            # 4. /api/v1/engine/{subset}/{unit}/sensors
+            if "/engine/" in url and "/sensors" in url:
+                path = url.split("?")[0]
+                qp = {}
+                if "?" in url:
+                    for pair in url.split("?", 1)[1].split("&"):
+                        if "=" in pair:
+                            k, v = pair.split("=", 1)
+                            qp[k] = v
+                parts = path.strip("/").split("/")
+                subset = parts[parts.index("engine") + 1]
+                unit = int(parts[parts.index("engine") + 2])
+                split_val = qp.get("split", "train")
+                res = monitoring.get_engine_sensors(subset=subset, unit=unit, split=split_val)
+                return _MockResponse(200, res.model_dump())
 
-        # 5. /api/v1/safety/audit-trail
-        if url.endswith("/safety/audit-trail"):
-            res = safety.get_audit_trail()
-            return _MockResponse(200, res.model_dump())
+            # 5. /api/v1/safety/audit-trail
+            if url.endswith("/safety/audit-trail"):
+                res = safety.get_audit_trail()
+                return _MockResponse(200, res.model_dump())
 
-        raise ValueError(f"Unsupported GET route in adapter: {url}")
+            return _MockResponse(404, {"detail": f"Route '{url}' not found."})
+        except HTTPException as he:
+            return _MockResponse(he.status_code, {"detail": he.detail})
+        except Exception as e:
+            return _MockResponse(500, {"detail": str(e)})
 
     def post(self, url: str, json: Dict[str, Any] = None) -> Any:
         if self._real_client is not None:
@@ -131,33 +161,40 @@ class FastAPITestClientAdapter:
 
         payload = json or {}
         from backend.api import monitoring, prognostics, simulation, safety
+        from pydantic import ValidationError
+        from fastapi import HTTPException
 
-        if url.endswith("/monitoring/anomaly-check"):
-            req = AnomalyCheckRequest(**payload)
-            res = monitoring.check_anomaly(req)
-            return _MockResponse(200, res.model_dump())
+        try:
+            if url.endswith("/monitoring/anomaly-check"):
+                req = AnomalyCheckRequest(**payload)
+                res = monitoring.check_anomaly(req)
+                return _MockResponse(200, res.model_dump())
 
-        elif url.endswith("/predict/rul"):
-            req = RULPredictionRequest(**payload)
-            res = prognostics.predict_rul(req)
-            return _MockResponse(200, res.model_dump())
+            elif url.endswith("/predict/rul"):
+                req = RULPredictionRequest(**payload)
+                res = prognostics.predict_rul(req)
+                return _MockResponse(200, res.model_dump())
 
-        elif url.endswith("/simulation/what-if"):
-            req = SimulationWhatIfRequest(**payload)
-            res = simulation.run_simulation_what_if(req)
-            return _MockResponse(200, res.model_dump())
+            elif url.endswith("/simulation/what-if"):
+                req = SimulationWhatIfRequest(**payload)
+                res = simulation.run_simulation_what_if(req)
+                return _MockResponse(200, res.model_dump())
 
-        elif url.endswith("/safety/verify"):
-            req = SafetyVerificationRequest(**payload)
-            res = safety.verify_safety_action(req)
-            return _MockResponse(200, res.model_dump())
+            elif url.endswith("/safety/verify"):
+                req = SafetyVerificationRequest(**payload)
+                res = safety.verify_safety_action(req)
+                return _MockResponse(200, res.model_dump())
 
-        elif url.endswith("/safety/execute-gated"):
-            req = SimulationWhatIfRequest(**payload)
-            res = safety.execute_gated_action(req)
-            return _MockResponse(200, res.model_dump())
+            elif url.endswith("/safety/execute-gated"):
+                req = SimulationWhatIfRequest(**payload)
+                res = safety.execute_gated_action(req)
+                return _MockResponse(200, res.model_dump())
 
-        raise ValueError(f"Unsupported POST route in adapter: {url}")
+            raise ValueError(f"Unsupported POST route in adapter: {url}")
+        except ValidationError as ve:
+            return _MockResponse(422, {"detail": ve.errors()})
+        except HTTPException as he:
+            return _MockResponse(he.status_code, {"detail": he.detail})
 
 
 class TestBackendEndpointsStep8_2(unittest.TestCase):

@@ -21,6 +21,11 @@ from digital_twin.scenario_interface import (
 )
 from preprocessing.scaling_pipeline import CMAPSSScalingPipeline
 
+try:
+    from digital_twin.unscented_kalman_filter import TurbofanStateUKF
+except ImportError:
+    TurbofanStateUKF = None
+
 
 ORDERED_SCALER_FEATURES = [
     "op_setting_1", "op_setting_2", "op_setting_3",
@@ -55,6 +60,7 @@ class DigitalTwinSimulator:
         checkpoint_dir: str = os.path.join("models", "checkpoints"),
         window_size: int = 30,
         enable_ml_inference: bool = False,
+        enable_state_estimation: bool = False,
         scenario: Optional[ScenarioConfig] = None,
     ):
         self.subset = subset.upper()
@@ -66,7 +72,13 @@ class DigitalTwinSimulator:
         self.scalers_dir = scalers_dir
         self.checkpoint_dir = checkpoint_dir
         self.enable_ml_inference = enable_ml_inference
+        self.enable_state_estimation = enable_state_estimation
         self.loader = TrajectoryLoader(data_dir=self.data_dir)
+
+        # Unscented Kalman Filter State Estimator
+        self.ukf_estimator: Optional[Any] = None
+        if self.enable_state_estimation and TurbofanStateUKF is not None:
+            self.ukf_estimator = TurbofanStateUKF()
 
         # What-if scenario state
         self.active_scenario: Optional[ScenarioConfig] = None
@@ -125,6 +137,9 @@ class DigitalTwinSimulator:
         self.state_history = []
         self.current_scenario_audit = None
         self.scenario_audit_history = []
+
+        if self.enable_state_estimation and TurbofanStateUKF is not None:
+            self.ukf_estimator = TurbofanStateUKF()
 
         # Advance to cycle 1 (initial state)
         initial_state = self.step()
@@ -230,6 +245,18 @@ class DigitalTwinSimulator:
         nf = float(row["sensor_8"])
         nc = float(row["sensor_9"])
         spool_speed_ratio = float(nc / nf) if nf > 0 else 0.0
+
+        # Optional UKF state estimation step
+        if self.ukf_estimator is not None:
+            ukf_meas = [
+                float(row["sensor_2"]),
+                float(row["sensor_3"]),
+                float(row["sensor_4"]),
+                float(row["sensor_7"]),
+                float(row["sensor_8"]),
+                float(row["sensor_9"]),
+            ]
+            self.ukf_estimator.step(ukf_meas)
 
         # Construct tier-aware representations G30 and G31
         current_history_len = len(self.norm_history)
@@ -349,6 +376,25 @@ class DigitalTwinSimulator:
         records = [s.to_dict(include_arrays=False) for s in self.state_history]
         return pd.DataFrame(records)
 
+    def advance_to_cycle(self, target_cycle: int) -> Optional[EngineState]:
+        """
+        Fast-forward simulation up to target_cycle, computing ML inference only on
+        the final requested cycle to eliminate redundant intermediate neural passes.
+        """
+        if self.current_state and self.current_state.time_cycles >= target_cycle:
+            return self.current_state
+
+        orig_ml = self.enable_ml_inference
+        # Disable ML inference for intermediate cycles
+        self.enable_ml_inference = False
+        while self.current_state and self.current_state.time_cycles < target_cycle - 1:
+            if self.step() is None:
+                break
+
+        # Re-enable ML inference for the target cycle
+        self.enable_ml_inference = orig_ml
+        return self.step()
+
     def apply_safe_action(
         self,
         action: Any,
@@ -366,3 +412,15 @@ class DigitalTwinSimulator:
             action=action,
             operator_approval=operator_approval,
         )
+
+    def get_ukf_state(self) -> Optional[Dict[str, Any]]:
+        """Returns the current filtered state estimate from the Unscented Kalman Filter."""
+        if self.ukf_estimator is None:
+            return None
+        return {
+            "estimated_state": {
+                name: round(float(self.ukf_estimator.ukf.x[i]), 4)
+                for i, name in enumerate(self.ukf_estimator.STATE_NAMES)
+            },
+            "covariance_trace": round(float(np.trace(self.ukf_estimator.ukf.P)), 6),
+        }

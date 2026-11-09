@@ -4,7 +4,8 @@ Phase 8 - Step 8.2: Endpoints serving interactive What-If scenario perturbations
 and closed-loop Digital Twin updates.
 """
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
+import math
 from fastapi import APIRouter, HTTPException
 
 from backend.schemas.api_schemas import (
@@ -28,12 +29,34 @@ def run_simulation_what_if(req: SimulationWhatIfRequest) -> SimulationWhatIfResp
     sub_upper = req.subset.upper()
 
     try:
-        # 1. Resolve ActionType enum
-        action_type_str = req.action_type.upper()
-        try:
+        # 1. Resolve ActionType enum and defensive validation
+        action_type_str = req.action_type.upper().strip()
+        if action_type_str == "SET_SENSOR_BIAS":
+            a_type = ActionType.SENSOR_BIAS_INJECTION
+        elif action_type_str in ActionType.__members__:
             a_type = ActionType[action_type_str]
-        except KeyError:
-            a_type = ActionType.THERMAL_PERTURBATION
+        else:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Invalid action_type '{req.action_type}'. Must be one of {[a.value for a in ActionType]}",
+            )
+
+        if not req.target_variable or not req.target_variable.strip():
+            raise HTTPException(
+                status_code=422,
+                detail="target_variable cannot be empty or whitespace.",
+            )
+
+        if isinstance(req.proposed_value, float) and (math.isnan(req.proposed_value) or math.isinf(req.proposed_value)):
+            raise HTTPException(
+                status_code=422,
+                detail="proposed_value cannot be NaN or Infinite.",
+            )
+        if isinstance(req.delta_value, float) and (math.isnan(req.delta_value) or math.isinf(req.delta_value)):
+            raise HTTPException(
+                status_code=422,
+                detail="delta_value cannot be NaN or Infinite.",
+            )
 
         action = SimulationAction(
             action_id=f"act_whatif_{sub_upper}_u{req.unit_number}_c{req.cycle}",
@@ -47,9 +70,7 @@ def run_simulation_what_if(req: SimulationWhatIfRequest) -> SimulationWhatIfResp
         sim = DigitalTwinSimulator(subset=sub_upper, enable_ml_inference=True)
         sim.load_engine(unit_number=req.unit_number, split="train")
         if req.cycle:
-            while sim.current_state and sim.current_state.time_cycles < req.cycle:
-                if sim.step() is None:
-                    break
+            sim.advance_to_cycle(req.cycle)
 
         # 3. Apply safe action through closed-loop governor
         governor = ClosedLoopSafetyGovernor()
@@ -82,6 +103,13 @@ def run_simulation_what_if(req: SimulationWhatIfRequest) -> SimulationWhatIfResp
             reason_summary=res.reason_summary,
             recovery_plan=rec_dict,
             disclaimer=ACADEMIC_SIMULATION_DISCLAIMER,
+        )
+    except HTTPException:
+        raise
+    except (FileNotFoundError, KeyError) as err:
+        raise HTTPException(
+            status_code=503,
+            detail=f"MODEL_UNAVAILABLE: Checkpoint or scaler required for simulation is missing or inaccessible. {str(err)}"
         )
     except Exception as e:
         raise HTTPException(
