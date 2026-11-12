@@ -36,7 +36,80 @@ Traditional aircraft maintenance relies on fixed flight-hour intervals or reacti
 
 The end-to-end 4-stage closed-loop architecture integrates data preprocessing, multi-agent AI reasoning, Digital Twin simulation, and safety verification:
 
-![Project Architecture](docs/architecture.png.jpg)
+![Project Architecture](docs/architecture.png)
+
+```mermaid
+flowchart TD
+    %% STAGE 1
+    subgraph STAGE1 ["STAGE 1: DATA PREPROCESSING"]
+        direction LR
+        DC["Data Cleaning"] --> NORM["Normalization"] --> FE["Feature Engineering"] --> WIN["Windows"] --> SR["Processed Sensor-State Representation"]
+    end
+
+    %% STAGE 2
+    subgraph STAGE2 ["STAGE 2: AGENTIC AI REASONING LAYER"]
+        direction TB
+        subgraph AGENTS ["Specialized Diagnostic & Prognostic Agents"]
+            direction LR
+            MA["Monitoring Agent<br/><b>(LSTM-AE)</b>"]
+            DA["Diagnosis Agent<br/><b>(XGBoost / CNN)</b>"]
+            PA["Prognostics Agent<br/><b>(LSTM / Transformer)</b>"]
+        end
+        RPA["Recovery Planning Agent<br/><b>(A* / Optimization / PPO)</b>"]
+        CA["Candidate Actions"]
+        
+        MA --> RPA
+        DA --> RPA
+        PA --> RPA
+        RPA --> CA
+    end
+
+    %% STAGE 3
+    subgraph STAGE3 ["STAGE 3: DIGITAL TWIN"]
+        direction TB
+        CSE["Current State Estimation"]
+        DDM["Data-Driven Model"]
+        FSP["Future-State Prediction"]
+        MODELS["Kalman / UKF | Neural State Model | Monte Carlo"]
+        SO["Simulated Outcomes"]
+        
+        CSE --> DDM --> FSP --> MODELS --> SO
+    end
+
+    %% STAGE 4
+    subgraph STAGE4 ["STAGE 4: SAFETY VERIFICATION"]
+        direction TB
+        SAFE{"Safe?"}
+        ACCEPT["Accept Action"]
+        REJECT["Reject"]
+        RECOV["Recovery Action"]
+        
+        SAFE -- "Yes" --> ACCEPT
+        SAFE -- "No" --> REJECT
+        REJECT --> RECOV
+    end
+
+    %% CLOSED-LOOP UPDATE
+    subgraph STAGE_CL ["CLOSED-LOOP UPDATE"]
+        direction LR
+        NT["New Telemetry"] --> USS["Update System State"] --> UT["Update Twin"]
+    end
+
+    %% INTER-STAGE CONNECTIONS
+    STAGE1 --> STAGE2
+    CA --> STAGE3
+    SO --> STAGE4
+    ACCEPT --> STAGE_CL
+    RECOV --> STAGE_CL
+    UT -->|"Feedback & Telemetry Recalibration"| STAGE1
+
+    %% STYLING
+    style STAGE1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    style STAGE2 fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c
+    style STAGE3 fill:#e1f5fe,stroke:#0277bd,stroke-width:2px,color:#01579b
+    style STAGE4 fill:#fce4ec,stroke:#c2185b,stroke-width:2px,color:#880e4f
+    style STAGE_CL fill:#ede7f6,stroke:#512da8,stroke-width:2px,color:#311b92
+```
 
 ### Architectural Breakdown
 
@@ -134,7 +207,8 @@ Aircraft_Engine_AI/
 ├── models/                          # Saved scalers & champion model checkpoints
 ├── dataset/                         # NASA C-MAPSS raw data & split/sequence manifests
 ├── docs/                            # Architecture diagram, V&V matrix, runbooks & reports
-│   └── architecture.png.jpg         # Complete 4-stage system architecture diagram
+│   ├── architecture.png             # Complete 4-stage system architecture diagram (PNG)
+│   └── architecture.jpg             # High-resolution architecture diagram (JPG)
 ├── reports/                         # EDA statistics & 86 diagnostic visualizations
 └── tests/                           # 55 automated test suites (601 passing tests)
 ```
