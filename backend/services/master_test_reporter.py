@@ -18,7 +18,14 @@ System Testing milestones (Steps 9.1 through 9.9 and Step 9.10), certifying:
 
 import json
 import os
+import sys
+from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+# Ensure project root is in sys.path when executed directly
+_project_root = Path(__file__).resolve().parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
 
 
 def generate_master_test_matrix() -> List[Dict[str, Any]]:
@@ -882,3 +889,9 @@ def export_matrix_to_json(filepath: str = "docs/phase9_step9_10_verification_mat
         json.dump(payload, f, indent=2)
 
     return json.dumps(payload, indent=2)
+
+
+if __name__ == "__main__":
+    export_matrix_to_markdown()
+    export_matrix_to_json()
+    print("Master V&V test matrix successfully exported to docs/")

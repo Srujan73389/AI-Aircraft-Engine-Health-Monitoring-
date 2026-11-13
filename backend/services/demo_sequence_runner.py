@@ -14,6 +14,14 @@ Strict Engineering & Academic Integrity Constraints:
   3. Validates actual ground truth comparisons, safety decisions, and defensive rollbacks deterministically.
 """
 
+import sys
+from pathlib import Path
+
+# Ensure project root is in sys.path when executed directly
+_project_root = Path(__file__).resolve().parent.parent.parent
+if str(_project_root) not in sys.path:
+    sys.path.insert(0, str(_project_root))
+
 import time
 from typing import Any, Dict, List, Optional
 from backend.main import app
@@ -470,3 +478,27 @@ def execute_demo_sequence(client: Optional[Any] = None) -> Dict[str, Any]:
         "step_details": step_records,
         "summary": summary
     }
+
+
+if __name__ == "__main__":
+    print("=" * 80)
+    print("  AI-BASED AIRCRAFT ENGINE HEALTH MONITORING & DIGITAL TWIN")
+    print("  Master Demonstration Sequence Runner (Phase 9 Step 9.12)")
+    print("=" * 80)
+    print("Executing 10-step demonstration sequence across all 3 pillars...\n")
+    
+    result = execute_demo_sequence()
+    
+    for idx, step in enumerate(result["step_details"], 1):
+        status_tag = "PASS" if step["passed"] else "FAIL"
+        print(f"[{status_tag}] Step {idx:02d} ({step['step_id']}): {step['name']}")
+        print(f"       Pillar:  {step['pillar']}")
+        print(f"       Latency: {step['latency_ms']:.2f} ms | HTTP {step['status_code']}")
+        if "details" in step and step["details"]:
+            details_str = ", ".join(f"{k}={v}" for k, v in list(step["details"].items())[:3])
+            print(f"       Details: {details_str}")
+        print()
+    
+    print("-" * 80)
+    print(f"SUMMARY: {result['summary']}")
+    print("=" * 80)
